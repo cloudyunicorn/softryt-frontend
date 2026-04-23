@@ -258,8 +258,8 @@ function parseJsxProps(propsString: string): Record<string, unknown> {
 /**
  * Wrapper components that decode __data prop and pass to real components.
  */
-function createDataWrapper<T extends Record<string, unknown>>(
-  Component: React.ComponentType<T>
+function createDataWrapper(
+  Component: React.ComponentType<any>
 ) {
   return function DataWrapper(props: any) {
     if (props.__data) {
@@ -267,7 +267,7 @@ function createDataWrapper<T extends Record<string, unknown>>(
         const decoded = JSON.parse(
           Buffer.from(props.__data, "base64").toString("utf-8")
         );
-        return <Component {...(decoded as T)} />;
+        return <Component {...decoded} />;
       } catch {
         return null;
       }
