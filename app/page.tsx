@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ComparisonCard } from "@/components/comparison-card";
 import {
   Zap,
   ArrowRight,
@@ -49,9 +50,9 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 export default async function HomePage() {
   // Fetch published comparison pages
-  const { data: pages } = await supabase
+  const { data: pages, count: totalComparisons } = await supabase
     .from("generated_pages")
-    .select("*")
+    .select("*", { count: "exact" })
     .eq("published_status", "published")
     .order("updated_at", { ascending: false })
     .limit(12);
@@ -69,6 +70,17 @@ export default async function HomePage() {
   });
 
   const typedPages = (pages || []) as GeneratedPage[];
+
+  let displayComparisonsCount = "0";
+  if (totalComparisons) {
+    if (totalComparisons >= 100) {
+      displayComparisonsCount = `${Math.floor(totalComparisons / 100) * 100}+`;
+    } else if (totalComparisons >= 10) {
+      displayComparisonsCount = `${Math.floor(totalComparisons / 10) * 10}+`;
+    } else {
+      displayComparisonsCount = `${totalComparisons}`;
+    }
+  }
 
   return (
     <>
@@ -131,7 +143,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-16">
             {[
               { label: "Tools Tracked", value: (tools || []).length + "+" },
-              { label: "Comparisons", value: typedPages.length + "+" },
+              { label: "Comparisons", value: displayComparisonsCount },
               { label: "Updated", value: "Weekly" },
             ].map((stat) => (
               <div
@@ -193,13 +205,21 @@ export default async function HomePage() {
       {/* ── COMPARISONS GRID ─────────────────────────────── */}
       <section id="comparisons" className="scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight mb-3">
-              Latest Comparisons
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              In-depth, AI-generated analysis of the most popular B2B SaaS tools
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+            <div className="text-left">
+              <h2 className="text-3xl font-bold tracking-tight mb-3">
+                Latest Comparisons
+              </h2>
+              <p className="text-muted-foreground max-w-lg">
+                In-depth, AI-generated analysis of the most popular B2B SaaS tools
+              </p>
+            </div>
+            <Link href="/comparisons">
+              <Button variant="ghost" size="sm" className="group text-muted-foreground hover:text-primary">
+                View all
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
 
           {typedPages.length > 0 ? (
@@ -274,7 +294,7 @@ export default async function HomePage() {
             We&apos;re constantly adding new tools and comparisons. Check back
             soon or let us know what you&apos;d like to see.
           </p>
-          <Link href="/#comparisons">
+          <Link href="/comparisons">
             <Button
               size="lg"
               variant="outline"
@@ -290,61 +310,4 @@ export default async function HomePage() {
   );
 }
 
-/**
- * Comparison Card Component
- * Renders a single comparison page card in the grid.
- */
-function ComparisonCard({ page }: { page: GeneratedPage }) {
-  const formattedDate = new Date(page.updated_at).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 
-  // Extract tool names from title (e.g., "Notion vs Coda" from "Notion vs Coda: Complete Comparison (2026)")
-  const titleParts = page.title.split(":");
-  const toolNames = titleParts[0] || page.title;
-
-  return (
-    <Link href={`/${page.slug}`}>
-      <Card className="group h-full hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-border/50 bg-card/50 overflow-hidden">
-        {/* Gradient accent bar */}
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between mb-2">
-            <Badge
-              variant="secondary"
-              className="text-[10px] uppercase tracking-wider"
-            >
-              {page.page_type}
-            </Badge>
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              {page.view_count}
-            </span>
-          </div>
-          <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">
-            {toolNames}
-          </CardTitle>
-        </CardHeader>
-
-        <CardContent>
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-            {page.meta_description}
-          </p>
-          <div className="flex items-center justify-between text-xs text-muted-foreground/60">
-            <span className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              {formattedDate}
-            </span>
-            <span className="text-primary/80 font-medium group-hover:text-primary flex items-center gap-1 transition-colors">
-              Read more
-              <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
-  );
-}
