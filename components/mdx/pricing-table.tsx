@@ -26,11 +26,13 @@ interface ToolPricing {
 interface PricingTableProps {
   toolA?: ToolPricing;
   toolB?: ToolPricing;
+  toolALogo?: string | null;
+  toolBLogo?: string | null;
   [key: string]: unknown;
 }
 
 export function PricingTable(props: PricingTableProps) {
-  const { toolA, toolB } = props;
+  const { toolA, toolB, toolALogo, toolBLogo } = props;
 
   // If neither tool has data, don't render
   if (!toolA && !toolB) return null;
@@ -41,8 +43,8 @@ export function PricingTable(props: PricingTableProps) {
         💰 Pricing Comparison
       </h3>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {toolA && <PricingColumn tool={toolA} accent="blue" />}
-        {toolB && <PricingColumn tool={toolB} accent="emerald" />}
+        {toolA && <PricingColumn tool={toolA} accent="blue" logoUrl={toolALogo} />}
+        {toolB && <PricingColumn tool={toolB} accent="emerald" logoUrl={toolBLogo} />}
       </div>
     </div>
   );
@@ -51,9 +53,11 @@ export function PricingTable(props: PricingTableProps) {
 function PricingColumn({
   tool,
   accent,
+  logoUrl,
 }: {
   tool: ToolPricing;
   accent: "blue" | "emerald";
+  logoUrl?: string | null;
 }) {
   const gradientClass =
     accent === "blue"
@@ -70,8 +74,11 @@ function PricingColumn({
   return (
     <div className="space-y-4">
       <h4
-        className={`text-lg font-semibold text-center pb-2 border-b border-border`}
+        className={`text-lg font-semibold text-center pb-2 border-b border-border flex items-center justify-center gap-2`}
       >
+        {logoUrl && (
+          <img src={logoUrl} alt={tool.name ?? "Tool"} className="w-6 h-6 rounded-md border border-border/50 object-cover bg-white" />
+        )}
         {tool.name ?? "Tool"}
       </h4>
       {tiers.length > 0 ? (

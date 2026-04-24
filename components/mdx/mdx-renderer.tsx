@@ -72,7 +72,7 @@ function jsExprToJson(expr: string): string {
   while (i < len) {
     const ch = expr[i];
 
-    // Handle quoted strings — pass through verbatim
+    // Handle quoted strings — pass through verbatim, but escape control chars for JSON safety
     if (ch === '"') {
       result += '"';
       i++;
@@ -80,6 +80,15 @@ function jsExprToJson(expr: string): string {
         if (expr[i] === '\\' && i + 1 < len) {
           result += expr[i] + expr[i + 1];
           i += 2;
+        } else if (expr[i] === '\n') {
+          result += '\\n';
+          i++;
+        } else if (expr[i] === '\r') {
+          result += '\\r';
+          i++;
+        } else if (expr[i] === '\t') {
+          result += '\\t';
+          i++;
         } else {
           result += expr[i];
           i++;
@@ -240,10 +249,22 @@ function parseJsxProps(propsString: string): Record<string, unknown> {
           // Use our safe JS-to-JSON converter
           const jsonified = jsExprToJson(expr);
           props[propName] = JSON.parse(jsonified);
-        } catch (e) {
-          console.error(`[MDX preprocessor] Failed to parse prop "${propName}":`, e, "\nExpression:", expr.substring(0, 200));
-          // Store as raw string fallback
-          props[propName] = expr;
+        } catch {
+          // Fallback 1: Try direct JSON.parse on raw expression
+          try {
+            props[propName] = JSON.parse(expr);
+          } catch {
+            // Fallback 2: Try cleaning common issues (e.g. trailing commas, unescaped chars)
+            try {
+              const cleaned = expr
+                .replace(/,\s*([}\]])/g, '$1')  // remove trailing commas
+                .replace(/'/g, '"');             // single to double quotes
+              props[propName] = JSON.parse(cleaned);
+            } catch {
+              // Silent fallback: store as raw string
+              props[propName] = expr;
+            }
+          }
         }
       }
     } else {
@@ -288,16 +309,27 @@ interface MdxContentProps {
   source: string;
   toolAName?: string;
   toolBName?: string;
+  toolALogo?: string | null;
+  toolBLogo?: string | null;
 }
 
-export function MdxContent({ source, toolAName, toolBName }: MdxContentProps) {
+export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo }: MdxContentProps) {
   const processed = preprocessMdx(source);
 
-  // Override VerdictCard to inject dynamic tool names from the page context
+  // Override components to inject dynamic tool names and logos from the page context
   const customComponents = {
     ...components,
+    PricingTable: createDataWrapper((props: any) => (
+      <PricingTable {...props} toolALogo={toolALogo} toolBLogo={toolBLogo} />
+    )),
+    ProsConsList: createDataWrapper((props: any) => (
+      <ProsConsList {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
+    )),
+    FeatureGrid: createDataWrapper((props: any) => (
+      <FeatureGrid {...props} toolALogo={toolALogo} toolBLogo={toolBLogo} />
+    )),
     VerdictCard: createDataWrapper((props: any) => (
-      <VerdictCard {...props} toolAName={toolAName} toolBName={toolBName} />
+      <VerdictCard {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
     )),
   };
 

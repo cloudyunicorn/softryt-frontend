@@ -13,20 +13,35 @@ interface ProsConsListProps {
   toolName?: string;
   pros?: string[];
   cons?: string[];
+  toolAName?: string;
+  toolBName?: string;
+  toolALogo?: string | null;
+  toolBLogo?: string | null;
   [key: string]: unknown;
 }
 
 export function ProsConsList(props: ProsConsListProps) {
-  const { toolName, pros, cons } = props;
+  const { toolName, pros, cons, toolAName, toolBName, toolALogo, toolBLogo } = props;
   const prosList = Array.isArray(pros) ? pros : [];
   const consList = Array.isArray(cons) ? cons : [];
 
   if (prosList.length === 0 && consList.length === 0) return null;
 
+  // Match the toolName to the correct logo
+  let logoUrl: string | null = null;
+  if (toolName && toolAName && toolName.toLowerCase().includes(toolAName.toLowerCase())) {
+    logoUrl = toolALogo ?? null;
+  } else if (toolName && toolBName && toolName.toLowerCase().includes(toolBName.toLowerCase())) {
+    logoUrl = toolBLogo ?? null;
+  }
+
   return (
     <Card className="my-6 overflow-hidden border-border/50 shadow-md">
-      <CardHeader className="pb-3 bg-gradient-to-r from-muted/50 to-transparent">
-        <CardTitle className="text-xl font-extrabold bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-xl font-extrabold bg-gradient-to-r from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent flex items-center gap-3">
+          {logoUrl && (
+            <img src={logoUrl} alt={toolName ?? "Tool"} className="w-7 h-7 rounded-lg border border-border/50 object-cover bg-white" />
+          )}
           {toolName ?? "Tool"} — Pros & Cons
         </CardTitle>
       </CardHeader>

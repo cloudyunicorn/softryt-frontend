@@ -22,7 +22,7 @@ export function ComparisonCard({ page }: { page: GeneratedPage }) {
         <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <CardHeader className="pb-3">
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-3">
             <Badge
               variant="secondary"
               className="text-[10px] uppercase tracking-wider"
@@ -34,9 +34,30 @@ export function ComparisonCard({ page }: { page: GeneratedPage }) {
               {page.view_count}
             </span>
           </div>
-          <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">
-            {toolNames}
-          </CardTitle>
+          
+          <div className="flex items-center gap-3 mb-2">
+            {(page.tool_a?.logo_url || page.tool_b?.logo_url) && (
+              <div className="flex -space-x-2">
+                {page.tool_a?.logo_url && (
+                  <img 
+                    src={page.tool_a.logo_url} 
+                    alt="Tool A Logo" 
+                    className="w-8 h-8 rounded-full border-2 border-background object-cover bg-white"
+                  />
+                )}
+                {page.tool_b?.logo_url && (
+                  <img 
+                    src={page.tool_b.logo_url} 
+                    alt="Tool B Logo" 
+                    className="w-8 h-8 rounded-full border-2 border-background object-cover bg-white"
+                  />
+                )}
+              </div>
+            )}
+            <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1">
+              {toolNames}
+            </CardTitle>
+          </div>
         </CardHeader>
 
         <CardContent>

@@ -27,18 +27,20 @@ interface FeatureGridProps {
   features?: FeatureItem[];
   toolAName?: string;
   toolBName?: string;
+  toolALogo?: string | null;
+  toolBLogo?: string | null;
   [key: string]: unknown;
 }
 
 export function FeatureGrid(props: FeatureGridProps) {
-  const { features, toolAName, toolBName } = props;
+  const { features, toolAName, toolBName, toolALogo, toolBLogo } = props;
   const featureList = Array.isArray(features) ? features : [];
 
   if (featureList.length === 0) return null;
 
   return (
     <Card className="my-8 overflow-hidden border-border/50 shadow-md">
-      <CardHeader className="pb-3 bg-gradient-to-r from-muted/50 to-transparent">
+      <CardHeader className="pb-3">
         <CardTitle className="text-xl font-extrabold bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
           📊 Feature-by-Feature Comparison
         </CardTitle>
@@ -50,12 +52,18 @@ export function FeatureGrid(props: FeatureGridProps) {
               <TableRow className="border-border/50 hover:bg-transparent">
                 <TableHead className="w-[40%] font-semibold">Feature</TableHead>
                 <TableHead className="text-center font-semibold">
-                  <span className="inline-flex items-center gap-1.5 text-blue-500">
+                  <span className="inline-flex items-center justify-center gap-2 text-blue-500">
+                    {toolALogo && (
+                      <img src={toolALogo} alt={toolAName ?? "Tool A"} className="w-5 h-5 rounded-md border border-border/50 object-cover bg-white" />
+                    )}
                     {toolAName ?? "Tool A"}
                   </span>
                 </TableHead>
                 <TableHead className="text-center font-semibold">
-                  <span className="inline-flex items-center gap-1.5 text-emerald-500">
+                  <span className="inline-flex items-center justify-center gap-2 text-emerald-500">
+                    {toolBLogo && (
+                      <img src={toolBLogo} alt={toolBName ?? "Tool B"} className="w-5 h-5 rounded-md border border-border/50 object-cover bg-white" />
+                    )}
                     {toolBName ?? "Tool B"}
                   </span>
                 </TableHead>

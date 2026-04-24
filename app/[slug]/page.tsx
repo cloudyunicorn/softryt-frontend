@@ -102,7 +102,7 @@ export default async function ComparisonPage({
 
   const { data: page } = await supabase
     .from("generated_pages")
-    .select("*")
+    .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)")
     .eq("slug", slug)
     .eq("published_status", "published")
     .single();
@@ -163,7 +163,34 @@ export default async function ComparisonPage({
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent leading-[1.15]">
+          {/* Tool Logos */}
+          {(typedPage.tool_a?.logo_url || typedPage.tool_b?.logo_url) && (
+            <div className="flex items-center justify-center sm:justify-start gap-3 mb-8">
+              {typedPage.tool_a?.logo_url && (
+                <div className="flex flex-col items-center gap-2">
+                  <img
+                    src={typedPage.tool_a.logo_url}
+                    alt={toolAName || "Tool A"}
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 border-border/50 object-cover bg-white shadow-lg"
+                  />
+                  <span className="text-xs font-semibold text-foreground/70">{toolAName}</span>
+                </div>
+              )}
+              <span className="text-sm font-bold text-muted-foreground/50 px-1">vs</span>
+              {typedPage.tool_b?.logo_url && (
+                <div className="flex flex-col items-center gap-2">
+                  <img
+                    src={typedPage.tool_b.logo_url}
+                    alt={toolBName || "Tool B"}
+                    className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 border-border/50 object-cover bg-white shadow-lg"
+                  />
+                  <span className="text-xs font-semibold text-foreground/70">{toolBName}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent leading-[1.15]">
             {typedPage.title}
           </h1>
 
@@ -202,7 +229,7 @@ export default async function ComparisonPage({
 
           [&_code]:text-sm [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-foreground/90 [&_code]:font-mono
         ">
-          <MdxContent source={typedPage.markdown_content} toolAName={toolAName} toolBName={toolBName} />
+          <MdxContent source={typedPage.markdown_content} toolAName={toolAName} toolBName={toolBName} toolALogo={typedPage.tool_a?.logo_url} toolBLogo={typedPage.tool_b?.logo_url} />
         </div>
 
         {/* Separator */}

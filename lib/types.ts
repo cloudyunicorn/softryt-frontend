@@ -56,6 +56,8 @@ export interface GeneratedPage {
   page_type: PageType;
   tool_a_id: string | null;
   tool_b_id: string | null;
+  tool_a?: { logo_url: string | null };
+  tool_b?: { logo_url: string | null };
   title: string;
   meta_description: string;
   markdown_content: string;
@@ -101,6 +103,8 @@ export interface VerdictCardProps {
   };
   toolAName?: string;
   toolBName?: string;
+  toolALogo?: string | null;
+  toolBLogo?: string | null;
 }
 
 export interface AffiliateButtonProps {

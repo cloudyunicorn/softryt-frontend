@@ -15,7 +15,7 @@ export const metadata = {
 export default async function ComparisonsPage() {
   const { data: pages } = await supabase
     .from("generated_pages")
-    .select("*")
+    .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)")
     .eq("published_status", "published")
     .order("updated_at", { ascending: false });
 
