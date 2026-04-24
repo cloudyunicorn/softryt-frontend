@@ -286,15 +286,25 @@ const components = {
 
 interface MdxContentProps {
   source: string;
+  toolAName?: string;
+  toolBName?: string;
 }
 
-export function MdxContent({ source }: MdxContentProps) {
+export function MdxContent({ source, toolAName, toolBName }: MdxContentProps) {
   const processed = preprocessMdx(source);
+
+  // Override VerdictCard to inject dynamic tool names from the page context
+  const customComponents = {
+    ...components,
+    VerdictCard: createDataWrapper((props: any) => (
+      <VerdictCard {...props} toolAName={toolAName} toolBName={toolBName} />
+    )),
+  };
 
   return (
     <MDXRemote
       source={processed}
-      components={components as any}
+      components={customComponents as any}
     />
   );
 }

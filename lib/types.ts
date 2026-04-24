@@ -97,9 +97,10 @@ export interface VerdictCardProps {
   winner: string;
   summary: string;
   bestFor: {
-    toolA: string;
-    toolB: string;
+    [key: string]: string;
   };
+  toolAName?: string;
+  toolBName?: string;
 }
 
 export interface AffiliateButtonProps {

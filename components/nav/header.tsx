@@ -9,7 +9,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Zap, Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -48,27 +47,42 @@ export function Header() {
         </nav>
 
         {/* Mobile Navigation */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-md hover:bg-accent hover:text-accent-foreground">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[280px]">
-            <SheetTitle className="text-lg font-bold mb-4">Navigation</SheetTitle>
-            <nav className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-muted/50"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+        <div className="md:hidden relative flex items-center">
+          <button
+            onClick={() => setOpen(!open)}
+            className="inline-flex items-center justify-center h-10 w-10 rounded-full hover:bg-accent/50 text-foreground transition-colors"
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <span className="sr-only">Toggle menu</span>
+          </button>
+
+          {/* Floating Pill Menu */}
+          {open && (
+            <>
+              {/* Invisible backdrop to catch outside clicks */}
+              <div 
+                className="fixed inset-0 z-40" 
+                onClick={() => setOpen(false)}
+              />
+              
+              <div className="absolute right-0 top-full mt-3 w-[200px] z-50 animate-in fade-in slide-in-from-top-2 zoom-in-95 duration-200 origin-top-right">
+                <div className="bg-background/80 backdrop-blur-2xl border border-white/10 dark:border-white/5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-[2rem] p-2 flex flex-col gap-1">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-all rounded-full hover:bg-muted/80 text-center"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

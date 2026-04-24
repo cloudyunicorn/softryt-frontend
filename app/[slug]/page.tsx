@@ -121,6 +121,13 @@ export default async function ComparisonPage({
     }
   );
 
+  // Extract tool names from title (e.g., "Notion vs Coda" from "Notion vs Coda: Complete Comparison (2026)")
+  const titleParts = typedPage.title.split(":");
+  const titlePrefix = titleParts[0] || typedPage.title;
+  const toolNamesStr = titlePrefix.split(" vs ");
+  const toolAName = toolNamesStr[0]?.trim();
+  const toolBName = toolNamesStr[1]?.trim();
+
   return (
     <>
       {/* JSON-LD Structured Data */}
@@ -195,7 +202,7 @@ export default async function ComparisonPage({
 
           [&_code]:text-sm [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-foreground/90 [&_code]:font-mono
         ">
-          <MdxContent source={typedPage.markdown_content} />
+          <MdxContent source={typedPage.markdown_content} toolAName={toolAName} toolBName={toolBName} />
         </div>
 
         {/* Separator */}

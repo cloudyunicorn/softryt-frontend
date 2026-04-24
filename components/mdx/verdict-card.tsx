@@ -11,7 +11,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { VerdictCardProps } from "@/lib/types";
 
-export function VerdictCard({ winner, summary, bestFor }: VerdictCardProps) {
+export function VerdictCard({ winner, summary, bestFor, toolAName, toolBName }: VerdictCardProps) {
+  /** Resolve a bestFor key to a display-friendly tool name. */
+  const getToolLabel = (key: string): string => {
+    if (key === "toolA" && toolAName) return toolAName;
+    if (key === "toolB" && toolBName) return toolBName;
+    // If the key is already a real tool name (new-style data), use it directly
+    if (key !== "toolA" && key !== "toolB") return key;
+    return "";
+  };
+
   return (
     <Card className="my-8 overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-transparent to-primary/5">
       {/* Winner Banner */}
@@ -39,19 +48,22 @@ export function VerdictCard({ winner, summary, bestFor }: VerdictCardProps) {
         {/* Best For */}
         {bestFor && Object.keys(bestFor).length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(bestFor).map(([key, value]) => (
-              <div
-                key={key}
-                className="rounded-xl border border-border/50 bg-muted/30 p-4 space-y-2"
-              >
-                <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
-                  Best for
-                </p>
-                <p className="text-sm text-foreground/90 leading-relaxed">
-                  {value}
-                </p>
-              </div>
-            ))}
+            {Object.entries(bestFor).map(([key, value]) => {
+              const toolLabel = getToolLabel(key);
+              return (
+                <div
+                  key={key}
+                  className="rounded-xl border border-border/50 bg-muted/30 p-4 space-y-2"
+                >
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+                    {toolLabel}
+                  </p>
+                  <p className="text-sm text-foreground/90 leading-relaxed">
+                    {value}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         )}
       </CardContent>
