@@ -312,11 +312,11 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {Object.entries(categoryCounts).map(([category, count]) => (
-              <Card
-                key={category}
-                className="group hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer border-border/50 bg-card/50"
-              >
-                <CardContent className="p-5 flex flex-col items-center text-center gap-3">
+              <Link key={category} href={`/category/${category}`}>
+                <Card
+                  className="group hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer border-border/50 bg-card/50 h-full"
+                >
+                  <CardContent className="p-5 flex flex-col items-center text-center gap-3">
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 border border-border/50 group-hover:border-primary/20 transition-colors">
                     {categoryIcons[category] || (
                       <Layers className="h-5 w-5" />
@@ -331,7 +331,8 @@ export default async function HomePage() {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
