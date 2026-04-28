@@ -82,7 +82,7 @@ function preprocessMdx(source: string): string {
   // Escape bare < followed by a digit (e.g., "<10 users") — MDX treats these as JSX tag starts
   processed = processed.replace(/<(\d)/g, '&lt;$1');
 
-  processed = processed.replace(/<([^\s>/!][^>]*?)>/g, (match, inner) => {
+  processed = processed.replace(/<(\/?[^\s>!][^>]*?)>/g, (match, inner) => {
     // Extract the tag name (first word, stripping any leading /)
     const tagNameMatch = inner.match(/^\/?\s*([a-zA-Z][a-zA-Z0-9_-]*)/);
     if (tagNameMatch) {
