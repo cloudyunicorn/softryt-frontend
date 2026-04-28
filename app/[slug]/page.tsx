@@ -16,7 +16,7 @@ import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Eye, ArrowLeft } from "lucide-react";
+import { Calendar, Eye, ArrowLeft, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { MdxContent } from "@/components/mdx/mdx-renderer";
 import type { GeneratedPage } from "@/lib/types";
@@ -102,7 +102,7 @@ export default async function ComparisonPage({
 
   const { data: page } = await supabase
     .from("generated_pages")
-    .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)")
+    .select("*, tool_a:tools!tool_a_id(logo_url, slug), tool_b:tools!tool_b_id(logo_url, slug)")
     .eq("slug", slug)
     .eq("published_status", "published")
     .single();
@@ -127,6 +127,24 @@ export default async function ComparisonPage({
   const toolNamesStr = titlePrefix.split(" vs ");
   const toolAName = toolNamesStr[0]?.trim();
   const toolBName = toolNamesStr[1]?.trim();
+
+  // Fetch review pages for both tools (if they exist)
+  const toolASlug = (page as any).tool_a?.slug;
+  const toolBSlug = (page as any).tool_b?.slug;
+
+  const reviewSlugs = [
+    toolASlug ? `review/${toolASlug}` : null,
+    toolBSlug ? `review/${toolBSlug}` : null,
+  ].filter(Boolean) as string[];
+
+  const { data: reviewPages } = reviewSlugs.length > 0
+    ? await supabase
+        .from("generated_pages")
+        .select("slug, title")
+        .eq("published_status", "published")
+        .eq("page_type", "review")
+        .in("slug", reviewSlugs)
+    : { data: null };
 
   return (
     <>
@@ -239,6 +257,41 @@ export default async function ComparisonPage({
         ">
           <MdxContent source={typedPage.markdown_content} toolAName={toolAName} toolBName={toolBName} toolALogo={typedPage.tool_a?.logo_url} toolBLogo={typedPage.tool_b?.logo_url} />
         </div>
+
+        {/* Cross-link to individual reviews */}
+        {reviewPages && reviewPages.length > 0 && (
+          <div className="mt-16 pt-8 border-t border-border/50">
+            <div className="flex items-center gap-2 mb-6">
+              <BookOpen className="h-5 w-5 text-emerald-500" />
+              <h3 className="text-xl font-bold">Read individual reviews</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {reviewPages.map((review) => {
+                const reviewToolName = review.title.split(" Review")[0];
+                const isToolA = review.slug.includes(toolASlug || "");
+                const logoUrl = isToolA ? typedPage.tool_a?.logo_url : typedPage.tool_b?.logo_url;
+                return (
+                  <Link key={review.slug} href={`/${review.slug}`}>
+                    <div className="group p-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 transition-colors flex items-center gap-4">
+                      {logoUrl && (
+                        <img
+                          src={logoUrl}
+                          alt={reviewToolName}
+                          className="w-10 h-10 rounded-xl border border-border/50 object-cover bg-white p-1"
+                        />
+                      )}
+                      <div className="flex-grow">
+                        <p className="font-semibold text-foreground">{reviewToolName} Review</p>
+                        <p className="text-sm text-muted-foreground">Pricing, features & verdict</p>
+                      </div>
+                      <ArrowRight className="h-4 w-4 text-emerald-500 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Separator */}
         <div className="h-px bg-border/50 mt-16 mb-8" />
