@@ -228,6 +228,14 @@ export default async function ComparisonPage({
           [&_hr]:border-border/50 [&_hr]:my-10
 
           [&_code]:text-sm [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-foreground/90 [&_code]:font-mono
+
+          [&_table]:w-full [&_table]:border-collapse
+          [&_thead]:bg-muted/50
+          [&_th]:text-left [&_th]:px-4 [&_th]:py-3 [&_th]:text-sm [&_th]:font-semibold [&_th]:text-foreground [&_th]:border-b [&_th]:border-border/50
+          [&_td]:px-4 [&_td]:py-3 [&_td]:text-sm [&_td]:text-foreground/80 [&_td]:border-b [&_td]:border-border/30
+          [&_tr:last-child_td]:border-b-0
+          [&_tbody_tr:nth-child(even)]:bg-muted/20
+          [&_tbody_tr]:transition-colors hover:[&_tbody_tr]:bg-muted/30
         ">
           <MdxContent source={typedPage.markdown_content} toolAName={toolAName} toolBName={toolBName} toolALogo={typedPage.tool_a?.logo_url} toolBLogo={typedPage.tool_b?.logo_url} />
         </div>

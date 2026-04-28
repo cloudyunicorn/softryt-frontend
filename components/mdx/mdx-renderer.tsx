@@ -15,6 +15,7 @@
  */
 
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { PricingTable } from "@/components/mdx/pricing-table";
 import { ProsConsList } from "@/components/mdx/pros-cons-list";
 import { FeatureGrid } from "@/components/mdx/feature-grid";
@@ -33,6 +34,58 @@ function preprocessMdx(source: string): string {
   const componentNames = ["PricingTable", "ProsConsList", "FeatureGrid", "VerdictCard", "AffiliateButton"];
   
   let processed = source;
+
+  // Strip lines that leak scraping internals to the user.
+  // Matches standalone paragraphs, blockquotes, and notes that reference scraping.
+  const scrapePatterns = [
+    /^>?\s*\*?\*?(?:Note:?\s*)?.*(?:scrape[d]?|scraping).*(?:data|pricing|feature|information).*(?:not|unavailable|empty|missing|absent).*$/gmi,
+    /^>?\s*\*?\*?(?:Note:?\s*)?.*(?:data|pricing|feature|information).*(?:not|unavailable|empty|missing|absent).*(?:scrape[d]?|scraping).*$/gmi,
+    /^>?\s*\*?\*?(?:Note:?\s*)?.*(?:scraped?\s+(?:data|payload|dataset)).*(?:not\s+contain|did\s+not|empty|unavailable).*$/gmi,
+    /^>?\s*\*?\*?(?:Note:?\s*)?.*(?:not\s+(?:available|present|captured|found)).*(?:scrape[d]?|scraping).*$/gmi,
+    /^>?\s*\*?.*(?:pricing|feature)\s+(?:details?|data)\s+(?:were?|was)\s+not\s+(?:captured|present|available).*(?:scrape[d]?|dataset).*\*?$/gmi,
+    /^>?\s*\*?.*(?:scrape[d]?\s+data(?:set)?)\s+did\s+not\s+(?:include|contain|capture).*$/gmi,
+  ];
+  for (const pattern of scrapePatterns) {
+    processed = processed.replace(pattern, '');
+  }
+
+  // Also clean up inline scrape references in list items and table cells
+  processed = processed.replace(/\s*\(?not\s+(?:captured|listed|present|found)\s+in\s+(?:the\s+)?scrape[d]?\s+data\)?/gi, '');
+  processed = processed.replace(/\s*\(?(?:from|in|via)\s+(?:the\s+)?scraped?\s+(?:data|dataset|payload)\)?/gi, '');
+
+  // Remove empty blockquote lines left behind
+  processed = processed.replace(/^>\s*$/gm, '');
+
+  // Escape stray angle brackets that aren't valid HTML or registered MDX components.
+  // LLM output often contains patterns like <Webex pricing...>, <10 users, etc.
+  const validHtmlTags = new Set([
+    "a","abbr","address","area","article","aside","audio","b","base","bdi","bdo","blockquote",
+    "body","br","button","canvas","caption","cite","code","col","colgroup","data","datalist",
+    "dd","del","details","dfn","dialog","div","dl","dt","em","embed","fieldset","figcaption",
+    "figure","footer","form","h1","h2","h3","h4","h5","h6","head","header","hgroup","hr",
+    "html","i","iframe","img","input","ins","kbd","label","legend","li","link","main","map",
+    "mark","menu","meta","meter","nav","noscript","object","ol","optgroup","option","output",
+    "p","picture","pre","progress","q","rp","rt","ruby","s","samp","script","section","select",
+    "slot","small","source","span","strong","style","sub","summary","sup","table","tbody","td",
+    "template","textarea","tfoot","th","thead","time","title","tr","track","u","ul","var","video","wbr",
+  ]);
+  const validMdxComponents = new Set(componentNames);
+
+  // Escape bare < followed by a digit (e.g., "<10 users") — MDX treats these as JSX tag starts
+  processed = processed.replace(/<(\d)/g, '&lt;$1');
+
+  processed = processed.replace(/<([^\s>/!][^>]*?)>/g, (match, inner) => {
+    // Extract the tag name (first word, stripping any leading /)
+    const tagNameMatch = inner.match(/^\/?\s*([a-zA-Z][a-zA-Z0-9_-]*)/);
+    if (tagNameMatch) {
+      const tagName = tagNameMatch[1];
+      if (validHtmlTags.has(tagName.toLowerCase()) || validMdxComponents.has(tagName)) {
+        return match; // keep valid tags
+      }
+    }
+    // Not a valid tag — escape the opening <
+    return `&lt;${inner}>`;
+  });
 
   for (const name of componentNames) {
     const selfClosingRegex = new RegExp(
@@ -245,6 +298,11 @@ function parseJsxProps(propsString: string): Record<string, unknown> {
         // Remove the outer { we captured
         expr = expr.substring(1);
         
+        // Clean up LLM syntax artifacts like [ {{ ... }}, {{ ... }} ]
+        expr = expr.replace(/\[\s*\{\s*\{/g, '[{')
+                   .replace(/\}\s*\}\s*\]/g, '}]')
+                   .replace(/\}\s*\}\s*,\s*\{\s*\{/g, '}, {');
+        
         try {
           // Use our safe JS-to-JSON converter
           const jsonified = jsExprToJson(expr);
@@ -319,9 +377,8 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
   // Override components to inject dynamic tool names and logos from the page context
   const customComponents = {
     ...components,
-    PricingTable: createDataWrapper((props: any) => (
-      <PricingTable {...props} toolALogo={toolALogo} toolBLogo={toolBLogo} />
-    )),
+    // Pricing table removed — pricing info is shown as text in the MDX content
+    PricingTable: () => null,
     ProsConsList: createDataWrapper((props: any) => (
       <ProsConsList {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
     )),
@@ -331,12 +388,18 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
     VerdictCard: createDataWrapper((props: any) => (
       <VerdictCard {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
     )),
+    table: (props: any) => (
+      <div className="w-full overflow-x-auto my-8 border border-border/50 rounded-xl">
+        <table {...props} className="w-full border-collapse min-w-[500px]" />
+      </div>
+    ),
   };
 
   return (
     <MDXRemote
       source={processed}
       components={customComponents as any}
+      options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
     />
   );
 }
