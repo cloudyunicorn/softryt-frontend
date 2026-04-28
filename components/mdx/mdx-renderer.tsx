@@ -61,6 +61,9 @@ function preprocessMdx(source: string): string {
     processed = processed.replace(new RegExp(`<\\s+${name}`, 'g'), `<${name}`);
   }
 
+  // Ensure standard void HTML tags are self-closing for JSX (e.g. <br> -> <br />)
+  processed = processed.replace(/<(br|hr)\s*>/gi, '<$1 />');
+
   // Strip JS-style comments inside JSX expression braces: {[] /* comment */} → {[]}
   processed = processed.replace(/\/\*[^*]*\*\//g, '');
 
