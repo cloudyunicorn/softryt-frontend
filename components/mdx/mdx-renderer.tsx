@@ -85,8 +85,11 @@ function preprocessMdx(source: string): string {
   ]);
   const validMdxComponents = new Set(componentNames);
 
-  // Escape bare < followed by a digit (e.g., "<10 users") — MDX treats these as JSX tag starts
-  processed = processed.replace(/<(\d)/g, '&lt;$1');
+  // Escape bare < followed by a digit, optionally with whitespace or special chars in between.
+  // Covers: <5 users, < 5 users, <$50/mo, <=5, <+50%, <~5, etc.
+  // MDX treats all of these as JSX tag starts and crashes.
+  processed = processed.replace(/<\s*(\d)/g, '&lt;$1');
+  processed = processed.replace(/<([=$+~#%])/g, '&lt;$1');
 
   processed = processed.replace(/<(\/?[^\s>!][^>]*?)>/g, (match, inner) => {
     // Extract the tag name (first word, stripping any leading /)
