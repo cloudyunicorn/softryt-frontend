@@ -21,6 +21,9 @@ import { ProsConsList } from "@/components/mdx/pros-cons-list";
 import { FeatureGrid } from "@/components/mdx/feature-grid";
 import { VerdictCard } from "@/components/mdx/verdict-card";
 import { AffiliateButton } from "@/components/mdx/affiliate-button";
+import { ReviewHero } from "@/components/mdx/review-hero";
+import { UsageSection } from "@/components/mdx/usage-section";
+import { ReviewVerdict } from "@/components/mdx/review-verdict";
 
 /**
  * Preprocesses MDX source to extract complex JSX props.
@@ -31,7 +34,7 @@ import { AffiliateButton } from "@/components/mdx/affiliate-button";
  *   <PricingTable __data="eyJ0b29sQSI6..." />
  */
 function preprocessMdx(source: string): string {
-  const componentNames = ["PricingTable", "ProsConsList", "FeatureGrid", "VerdictCard", "AffiliateButton"];
+  const componentNames = ["PricingTable", "ProsConsList", "FeatureGrid", "VerdictCard", "AffiliateButton", "ReviewHero", "UsageSection", "ReviewVerdict"];
   
   let processed = source;
 
@@ -372,6 +375,9 @@ const components = {
   FeatureGrid: createDataWrapper(FeatureGrid),
   VerdictCard: createDataWrapper(VerdictCard),
   AffiliateButton: createDataWrapper(AffiliateButton),
+  ReviewHero: createDataWrapper(ReviewHero),
+  UsageSection: createDataWrapper(UsageSection),
+  ReviewVerdict: createDataWrapper(ReviewVerdict),
 };
 
 interface MdxContentProps {
@@ -399,6 +405,11 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
     VerdictCard: createDataWrapper((props: any) => (
       <VerdictCard {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
     )),
+    ReviewHero: createDataWrapper((props: any) => (
+      <ReviewHero {...props} logoUrl={toolALogo} />
+    )),
+    UsageSection: createDataWrapper(UsageSection),
+    ReviewVerdict: createDataWrapper(ReviewVerdict),
     table: (props: any) => (
       <div className="w-full overflow-x-auto my-8 border border-border/50 rounded-xl">
         <table {...props} className="w-full border-collapse min-w-[500px]" />

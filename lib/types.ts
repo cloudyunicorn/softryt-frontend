@@ -113,6 +113,25 @@ export interface AffiliateButtonProps {
   variant?: "primary" | "secondary" | "outline";
 }
 
+export interface ReviewHeroProps {
+  toolName: string;
+  category: string;
+  tagline: string;
+}
+
+export interface UsageSectionProps {
+  useCases: Array<{
+    title: string;
+    description: string;
+    bestFor: string;
+  }>;
+}
+
+export interface ReviewVerdictProps {
+  summary: string;
+  bestFor: string;
+}
+
 // ── API Response Types ────────────────────────────────────
 
 export interface PageListResponse {

@@ -26,6 +26,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 1.0,
     },
+    {
+      url: `${siteUrl}/comparisons`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/reviews`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
   ];
 
   // Dynamic comparison/review pages
@@ -33,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${siteUrl}/${page.slug}`,
     lastModified: new Date(page.updated_at),
     changeFrequency: "weekly" as const,
-    priority: page.page_type === "comparison" ? 0.9 : 0.8,
+    priority: page.page_type === "comparison" ? 0.9 : page.page_type === "review" ? 0.85 : 0.8,
   }));
 
   return [...staticPages, ...dynamicPages];
