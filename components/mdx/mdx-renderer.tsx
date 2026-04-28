@@ -56,6 +56,14 @@ function preprocessMdx(source: string): string {
   // Remove empty blockquote lines left behind
   processed = processed.replace(/^>\s*$/gm, '');
 
+  // Normalize `< ComponentName` → `<ComponentName` (LLM sometimes adds a space after <)
+  for (const name of componentNames) {
+    processed = processed.replace(new RegExp(`<\\s+${name}`, 'g'), `<${name}`);
+  }
+
+  // Strip JS-style comments inside JSX expression braces: {[] /* comment */} → {[]}
+  processed = processed.replace(/\/\*[^*]*\*\//g, '');
+
   // Escape stray angle brackets that aren't valid HTML or registered MDX components.
   // LLM output often contains patterns like <Webex pricing...>, <10 users, etc.
   const validHtmlTags = new Set([
