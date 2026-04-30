@@ -25,11 +25,11 @@ export function Header() {
       <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
-            <Zap className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
+            <img src="/logo.png" alt="Cloudy Unicorn" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl font-bold tracking-tight">
-            Soft<span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">RYT</span>
+            Cloudy <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">Unicorn</span>
           </span>
         </Link>
 

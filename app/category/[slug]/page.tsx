@@ -29,7 +29,7 @@ export async function generateMetadata({
   const categoryName = slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 
   return {
-    title: `Best ${categoryName} Software & Tools | SoftRYT`,
+    title: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
     description: `Browse top-rated ${categoryName} tools. Read in-depth reviews and compare pricing, features, and alternatives to find the best software for your business.`,
   };
 }

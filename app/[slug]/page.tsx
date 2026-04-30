@@ -60,12 +60,12 @@ export async function generateMetadata({
 
   if (!page) {
     return {
-      title: "Page Not Found | SoftRYT",
+      title: "Page Not Found | Cloudy Unicorn",
       description: "The requested comparison page could not be found.",
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://softryt.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cloudyunicorn.com";
 
   return {
     title: page.title,
@@ -74,7 +74,7 @@ export async function generateMetadata({
       title: page.title,
       description: page.meta_description,
       url: `${siteUrl}/${page.slug}`,
-      siteName: "SoftRYT",
+      siteName: "Cloudy Unicorn",
       type: "article",
       modifiedTime: page.updated_at,
     },

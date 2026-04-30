@@ -19,18 +19,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SoftRYT — AI-Powered SaaS Comparison Platform",
-    template: "%s | SoftRYT",
+    default: "Cloudy Unicorn — AI-Powered SaaS Comparison Platform",
+    template: "%s | Cloudy Unicorn",
   },
   description:
     "Find the right B2B SaaS tool for your team. AI-powered, data-driven comparison pages with real pricing and feature analysis.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://softryt.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://cloudyunicorn.com"
   ),
   openGraph: {
     type: "website",
-    siteName: "SoftRYT",
-    title: "SoftRYT — AI-Powered SaaS Comparison Platform",
+    siteName: "Cloudy Unicorn",
+    title: "Cloudy Unicorn — AI-Powered SaaS Comparison Platform",
     description:
       "Find the right B2B SaaS tool for your team. AI-powered, data-driven comparison pages with real pricing and feature analysis.",
   },
@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 };
 

@@ -18,11 +18,11 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-3">
             <Link href="/" className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600">
-                <Zap className="h-3.5 w-3.5 text-white" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg overflow-hidden">
+                <img src="/logo.png" alt="Cloudy Unicorn" className="w-full h-full object-cover" />
               </div>
               <span className="text-lg font-bold tracking-tight">
-                Soft<span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">RYT</span>
+                Cloudy <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">Unicorn</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-xs">
@@ -73,7 +73,7 @@ export function Footer() {
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {currentYear} SoftRYT. All rights reserved.
+            © {currentYear} Cloudy Unicorn. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground/60">
             Some links are affiliate links. We may earn a commission at no cost to you.

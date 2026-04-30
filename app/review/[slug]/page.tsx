@@ -48,7 +48,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${page.title} | SoftRYT`,
+    title: `${page.title} | Cloudy Unicorn`,
     description: page.meta_description,
     openGraph: {
       title: page.title,
