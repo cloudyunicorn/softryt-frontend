@@ -17,9 +17,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="space-y-3">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg overflow-hidden">
-                <img src="/logo.png" alt="Cloudy Unicorn" className="w-full h-full object-cover" />
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="flex items-center justify-center w-8 h-8 transition-transform group-hover:scale-105">
+                <img src="/logo.png" alt="Cloudy Unicorn" className="w-full h-full object-contain drop-shadow-sm" />
               </div>
               <span className="text-lg font-bold tracking-tight">
                 Cloudy <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">Unicorn</span>
