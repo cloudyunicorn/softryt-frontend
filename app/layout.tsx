@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google";
 import { Header } from "@/components/nav/header";
 import { Footer } from "@/components/nav/footer";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css";
 
 const inter = Inter({
@@ -61,6 +62,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
