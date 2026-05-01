@@ -16,6 +16,7 @@ import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Calendar, Eye, ArrowLeft, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { MdxContent } from "@/components/mdx/mdx-renderer";
@@ -289,6 +290,31 @@ export default async function ComparisonPage({
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* Cross-link to alternatives */}
+        {(toolASlug || toolBSlug) && (
+          <div className="mt-12 pt-8 border-t border-border/50">
+            <h3 className="text-xl font-bold mb-6">Explore Alternatives</h3>
+            <div className="flex flex-wrap gap-4">
+              {toolASlug && (
+                <Link href={`/alternatives/${toolASlug}`}>
+                  <Button variant="outline" className="gap-2 bg-muted/20">
+                    View {toolAName} Alternatives
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              )}
+              {toolBSlug && (
+                <Link href={`/alternatives/${toolBSlug}`}>
+                  <Button variant="outline" className="gap-2 bg-muted/20">
+                    View {toolBName} Alternatives
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}

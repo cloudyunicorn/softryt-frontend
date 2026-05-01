@@ -6,6 +6,7 @@ import type { GeneratedPage, PageSlug } from "@/lib/types";
 import { ArrowLeft, Calendar, Eye } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const revalidate = 86400; // 24 hours
 
@@ -189,6 +190,15 @@ export default async function ReviewPage({
                   </div>
                 </Link>
               ))}
+            </div>
+
+            <div className="mt-8 flex justify-center sm:justify-start">
+              <Link href={`/alternatives/${slug}`}>
+                <Button variant="outline" className="gap-2 font-medium">
+                  View all {toolName} Alternatives
+                  <ArrowLeft className="w-4 h-4 rotate-180" />
+                </Button>
+              </Link>
             </div>
           </div>
         )}
