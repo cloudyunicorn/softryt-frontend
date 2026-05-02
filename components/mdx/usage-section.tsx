@@ -12,7 +12,7 @@ export function UsageSection({ useCases }: UsageSectionProps) {
             key={idx}
             className="flex flex-col p-6 rounded-2xl border border-border/50 bg-card/50 hover:bg-muted/30 transition-colors"
           >
-            <div className="flex items-start gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-4">
               <div className="shrink-0 p-2.5 rounded-xl bg-primary/10 text-primary">
                 {idx % 3 === 0 ? <Briefcase className="w-5 h-5" /> : idx % 3 === 1 ? <Zap className="w-5 h-5" /> : <Target className="w-5 h-5" />}
               </div>
