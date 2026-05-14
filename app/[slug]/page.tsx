@@ -220,7 +220,8 @@ export default async function ComparisonPage({
 
         {/* MDX Content Body */}
         <div className="
-          mdx-content
+          mdx-content break-words
+          [&_pre]:overflow-x-auto [&_pre]:max-w-full [&_pre]:bg-muted/30 [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-border/50 [&_pre]:my-6
           [&_h1]:text-4xl [&_h1]:font-extrabold [&_h1]:mt-10 [&_h1]:mb-6 [&_h1]:tracking-tight
           [&_h1]:bg-gradient-to-r [&_h1]:from-blue-500 [&_h1]:to-indigo-400 [&_h1]:bg-clip-text [&_h1]:text-transparent
 
@@ -246,7 +247,7 @@ export default async function ComparisonPage({
 
           [&_hr]:border-border/50 [&_hr]:my-10
 
-          [&_code]:text-sm [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-foreground/90 [&_code]:font-mono
+          [&_code]:text-sm [&_code]:bg-muted/50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-foreground/90 [&_code]:font-mono [&_code]:break-words [&_code]:whitespace-pre-wrap
 
           [&_table]:w-full [&_table]:border-collapse
           [&_thead]:bg-muted/50

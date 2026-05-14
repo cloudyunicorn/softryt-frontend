@@ -132,6 +132,26 @@ export interface ReviewVerdictProps {
   bestFor: string;
 }
 
+// ── Blog Types ────────────────────────────────────────────
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  meta_description: string;
+  markdown_content: string;
+  topic: string;
+  research_data: string | null;
+  cover_image_url: string | null;
+  schema_markup: Record<string, unknown> | null;
+  tags: string[];
+  published_status: PublishStatus;
+  published_at: string | null;
+  view_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
 // ── API Response Types ────────────────────────────────────
 
 export interface PageListResponse {

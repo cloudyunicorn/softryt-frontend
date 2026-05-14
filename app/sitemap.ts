@@ -38,6 +38,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
+    {
+      url: `${siteUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
   ];
 
   // Dynamic comparison/review pages
@@ -48,5 +54,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: page.page_type === "comparison" ? 0.9 : page.page_type === "review" ? 0.85 : 0.8,
   }));
 
-  return [...staticPages, ...dynamicPages];
+  // Blog posts (separate table)
+  const { data: blogPosts } = await supabase
+    .from("blog_posts")
+    .select("slug, updated_at")
+    .eq("published_status", "published")
+    .order("updated_at", { ascending: false });
+
+  const blogPages: MetadataRoute.Sitemap = (blogPosts || []).map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.updated_at),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...dynamicPages, ...blogPages];
 }
