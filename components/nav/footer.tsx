@@ -14,7 +14,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border/40 bg-muted/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-3">
             <Link href="/" className="flex items-center gap-2 group">
@@ -75,6 +75,23 @@ export function Footer() {
                   </li>
                 )
               )}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold">Company</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
