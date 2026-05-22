@@ -17,6 +17,7 @@ export default async function ComparisonsPage() {
     .from("generated_pages")
     .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)")
     .eq("published_status", "published")
+    .eq("page_type", "comparison")
     .order("updated_at", { ascending: false });
 
   const typedPages = (pages || []) as GeneratedPage[];

@@ -105,12 +105,12 @@ function preprocessMdx(source: string): string {
   });
 
   for (const name of componentNames) {
-    const selfClosingRegex = new RegExp(
-      `<${name}\\s([\\s\\S]*?)\\/>`,
+    const componentRegex = new RegExp(
+      `<${name}\\s([\\s\\S]*?)(?:\\/>|>(?:[\\s\\S]*?)<\\/\\s*${name}>)`,
       "g"
     );
 
-    processed = processed.replace(selfClosingRegex, (fullMatch, propsString: string) => {
+    processed = processed.replace(componentRegex, (fullMatch, propsString: string) => {
       try {
         const props = parseJsxProps(propsString.trim());
         if (Object.keys(props).length === 0) return fullMatch;
@@ -397,8 +397,9 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
   // Override components to inject dynamic tool names and logos from the page context
   const customComponents = {
     ...components,
-    // Pricing table removed — pricing info is shown as text in the MDX content
-    PricingTable: () => null,
+    PricingTable: createDataWrapper((props: any) => (
+      <PricingTable {...props} toolALogo={toolALogo} toolBLogo={toolBLogo} />
+    )),
     ProsConsList: createDataWrapper((props: any) => (
       <ProsConsList {...props} toolAName={toolAName} toolBName={toolBName} toolALogo={toolALogo} toolBLogo={toolBLogo} />
     )),
@@ -418,6 +419,10 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
         <table {...props} className="w-full border-collapse min-w-[500px]" />
       </div>
     ),
+    h1: (props: any) => <h2 {...props} />,
+    h2: (props: any) => <h3 {...props} />,
+    h3: (props: any) => <h4 {...props} />,
+    h4: (props: any) => <h5 {...props} />,
   };
 
   return (

@@ -11,12 +11,30 @@ import { supabase } from "@/lib/supabase";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://cloudyunicorn.com";
 
-  // Fetch all published pages
-  const { data: pages } = await supabase
-    .from("generated_pages")
-    .select("slug, updated_at, page_type")
-    .eq("published_status", "published")
-    .order("updated_at", { ascending: false });
+  // Fetch all published pages (range paginated)
+  let pages: any[] = [];
+  let from = 0;
+  const limit = 1000;
+  let hasMore = true;
+  while (hasMore) {
+    const { data } = await supabase
+      .from("generated_pages")
+      .select("slug, updated_at, page_type")
+      .eq("published_status", "published")
+      .order("updated_at", { ascending: false })
+      .range(from, from + limit - 1);
+    
+    if (data && data.length > 0) {
+      pages = pages.concat(data);
+      if (data.length < limit) {
+        hasMore = false;
+      } else {
+        from += limit;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -54,12 +72,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: page.page_type === "comparison" ? 0.9 : page.page_type === "review" ? 0.85 : 0.8,
   }));
 
-  // Blog posts (separate table)
-  const { data: blogPosts } = await supabase
-    .from("blog_posts")
-    .select("slug, updated_at")
-    .eq("published_status", "published")
-    .order("updated_at", { ascending: false });
+  // Fetch all published blog posts (range paginated)
+  let blogPosts: any[] = [];
+  let blogFrom = 0;
+  let blogHasMore = true;
+  while (blogHasMore) {
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("slug, updated_at")
+      .eq("published_status", "published")
+      .order("updated_at", { ascending: false })
+      .range(blogFrom, blogFrom + limit - 1);
+
+    if (data && data.length > 0) {
+      blogPosts = blogPosts.concat(data);
+      if (data.length < limit) {
+        blogHasMore = false;
+      } else {
+        blogFrom += limit;
+      }
+    } else {
+      blogHasMore = false;
+    }
+  }
 
   const blogPages: MetadataRoute.Sitemap = (blogPosts || []).map((post) => ({
     url: `${siteUrl}/blog/${post.slug}`,
