@@ -13,17 +13,18 @@ import { ExternalLink } from "lucide-react";
 
 interface AffiliateButtonProps {
   toolSlug?: string;
+  href?: string;
   label?: string;
   variant?: "primary" | "secondary" | "outline";
   [key: string]: unknown;
 }
 
 export function AffiliateButton(props: AffiliateButtonProps) {
-  const { toolSlug, label, variant = "primary" } = props;
+  const { toolSlug, href: directHref, label, variant = "primary" } = props;
 
-  if (!toolSlug) return null;
+  if (!toolSlug && !directHref) return null;
 
-  const href = `/api/go/${toolSlug}`;
+  const href = directHref || `/api/go/${toolSlug}`;
 
   const variantStyles: Record<string, string> = {
     primary:

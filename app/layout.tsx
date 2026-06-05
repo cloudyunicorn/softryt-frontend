@@ -4,7 +4,8 @@ import { Geist_Mono } from "next/font/google";
 import { Header } from "@/components/nav/header";
 import { Footer } from "@/components/nav/footer";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -58,6 +59,19 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-RSSCEMH5MP"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-RSSCEMH5MP');
+          `}
+        </Script>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
