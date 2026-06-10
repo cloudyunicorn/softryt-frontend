@@ -39,9 +39,9 @@ export function FeatureGrid(props: FeatureGridProps) {
   if (featureList.length === 0) return null;
 
   return (
-    <Card className="my-8 overflow-hidden border-border/50 shadow-md">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-xl font-extrabold bg-gradient-to-r from-teal-600 to-emerald-500 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">
+    <Card className="my-8 overflow-hidden border border-hairline bg-card rounded-lg shadow-sm">
+      <CardHeader className="pb-3 border-b border-hairline bg-surface/30">
+        <CardTitle className="text-xl font-semibold text-ink">
           📊 Feature-by-Feature Comparison
         </CardTitle>
       </CardHeader>
@@ -49,20 +49,20 @@ export function FeatureGrid(props: FeatureGridProps) {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-border/50 hover:bg-transparent">
-                <TableHead className="w-[40%] font-semibold">Feature</TableHead>
-                <TableHead className="text-center font-semibold">
-                  <span className="inline-flex items-center justify-center gap-2 text-blue-500">
+              <TableRow className="border-b border-hairline hover:bg-transparent bg-surface/10">
+                <TableHead className="w-[40%] font-semibold text-ink">Feature</TableHead>
+                <TableHead className="text-center font-semibold text-ink">
+                  <span className="inline-flex items-center justify-center gap-2">
                     {toolALogo && (
-                      <img src={toolALogo} alt={toolAName ?? "Tool A"} className="w-5 h-5 rounded-md border border-border/50 object-cover bg-white" />
+                      <img src={toolALogo} alt={toolAName ?? "Tool A"} className="w-5 h-5 rounded-md border border-hairline object-cover bg-white" />
                     )}
                     {toolAName ?? "Tool A"}
                   </span>
                 </TableHead>
-                <TableHead className="text-center font-semibold">
-                  <span className="inline-flex items-center justify-center gap-2 text-emerald-500">
+                <TableHead className="text-center font-semibold text-ink">
+                  <span className="inline-flex items-center justify-center gap-2">
                     {toolBLogo && (
-                      <img src={toolBLogo} alt={toolBName ?? "Tool B"} className="w-5 h-5 rounded-md border border-border/50 object-cover bg-white" />
+                      <img src={toolBLogo} alt={toolBName ?? "Tool B"} className="w-5 h-5 rounded-md border border-hairline object-cover bg-white" />
                     )}
                     {toolBName ?? "Tool B"}
                   </span>
@@ -73,9 +73,9 @@ export function FeatureGrid(props: FeatureGridProps) {
               {featureList.map((feature, idx) => (
                 <TableRow
                   key={idx}
-                  className="border-border/30 hover:bg-muted/30 transition-colors"
+                  className="border-b border-hairline-soft hover:bg-surface/30 transition-colors"
                 >
-                  <TableCell className="font-medium text-sm">
+                  <TableCell className="font-medium text-sm text-charcoal">
                     {feature.name ?? "—"}
                   </TableCell>
                   <TableCell className="text-center">
@@ -102,23 +102,23 @@ export function FeatureGrid(props: FeatureGridProps) {
  */
 function FeatureValue({ value }: { value?: boolean | string }) {
   if (value === undefined || value === null) {
-    return <span className="text-muted-foreground text-sm">—</span>;
+    return <span className="text-stone text-sm">—</span>;
   }
 
   if (typeof value === "boolean") {
     return value ? (
-      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500/15 text-green-500 text-sm font-bold">
+      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-brand-green/15 text-brand-green-deep text-sm font-bold">
         ✓
       </span>
     ) : (
-      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-500/10 text-red-400 text-sm">
+      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-brand-error/10 text-brand-error text-sm font-semibold">
         ✗
       </span>
     );
   }
 
   return (
-    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/15 text-amber-500 border border-amber-500/20">
+    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-warn/10 text-brand-warn border border-brand-warn/25">
       {value}
     </span>
   );

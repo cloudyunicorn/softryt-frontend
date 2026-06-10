@@ -31,7 +31,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
-      <article className="relative overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 hover:-translate-y-1 h-full flex flex-col">
+      <article className="relative overflow-hidden rounded-lg border border-hairline bg-card transition-all duration-300 hover:border-brand-green/35 hover:shadow-md hover:shadow-brand-green/5 hover:-translate-y-1 h-full flex flex-col">
         {/* Cover Image */}
         {post.cover_image_url && (
           <div className="aspect-[2/1] overflow-hidden">
@@ -45,7 +45,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
         {/* Gradient accent bar when no image */}
         {!post.cover_image_url && (
-          <div className="h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
+          <div className="h-1.5 bg-gradient-to-r from-brand-green to-brand-green-deep" />
         )}
 
         <div className="p-5 sm:p-6 flex flex-col flex-1">
@@ -56,7 +56,7 @@ export function BlogCard({ post }: BlogCardProps) {
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className="text-xs font-medium bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20"
+                  className="text-xs font-medium bg-brand-green/10 text-brand-green-deep border-brand-green/20 hover:bg-brand-green/20 rounded-full"
                 >
                   {tag}
                 </Badge>
@@ -65,18 +65,18 @@ export function BlogCard({ post }: BlogCardProps) {
           )}
 
           {/* Title */}
-          <h3 className="text-lg sm:text-xl font-bold text-foreground group-hover:text-blue-400 transition-colors line-clamp-2 mb-2">
+          <h3 className="text-lg sm:text-xl font-bold text-ink group-hover:text-brand-green-deep transition-colors line-clamp-2 mb-2">
             {post.title}
           </h3>
 
           {/* Excerpt */}
-          <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">
+          <p className="text-sm text-slate line-clamp-3 mb-4 flex-1">
             {post.meta_description}
           </p>
 
           {/* Meta row */}
-          <div className="flex items-center justify-between pt-3 border-t border-border/30">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="flex items-center justify-between pt-3 border-t border-hairline-soft">
+            <div className="flex items-center gap-3 text-xs text-slate/70">
               <span className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
                 {formattedDate}
@@ -87,7 +87,7 @@ export function BlogCard({ post }: BlogCardProps) {
               </span>
             </div>
 
-            <span className="text-xs font-medium text-blue-500 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-xs font-semibold text-brand-green-deep flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               Read <ArrowRight className="h-3 w-3" />
             </span>
           </div>

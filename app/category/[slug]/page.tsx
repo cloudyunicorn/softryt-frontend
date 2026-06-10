@@ -92,23 +92,23 @@ export default async function CategoryPage({
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-20 min-h-screen">
       <div className="mb-12">
         <Link href="/#categories">
-          <Button variant="ghost" size="sm" className="mb-6 -ml-3 text-muted-foreground hover:text-primary">
+          <Button variant="ghost" size="sm" className="mb-6 -ml-3 text-slate hover:text-ink hover:bg-surface rounded-md">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to categories
           </Button>
         </Link>
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-primary/30 border border-primary/20">
-            <Layers className="h-6 w-6 text-primary" />
+          <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-surface border border-hairline text-slate">
+            <Layers className="h-6 w-6" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight capitalize">
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight capitalize text-ink">
             {categoryName} Tools
           </h1>
         </div>
-        <p className="text-muted-foreground text-lg max-w-2xl">
+        <p className="text-slate text-lg max-w-2xl leading-relaxed">
           Browse {tools.length} top-rated tools in the {categoryName} category. Read our in-depth reviews or compare them head-to-head to find the perfect fit.
         </p>
       </div>

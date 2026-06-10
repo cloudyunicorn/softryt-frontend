@@ -17,19 +17,19 @@ export function ComparisonCard({ page }: { page: GeneratedPage }) {
 
   return (
     <Link href={`/${page.slug}`}>
-      <Card className="group h-full hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 border-border/50 bg-card/50 overflow-hidden">
+      <Card className="group h-full hover:border-brand-green/35 hover:shadow-md hover:shadow-brand-green/5 transition-all duration-300 border-hairline bg-card overflow-hidden rounded-lg">
         {/* Gradient accent bar */}
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="h-1 bg-gradient-to-r from-brand-blue via-brand-red to-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between mb-3">
             <Badge
               variant="secondary"
-              className="text-[10px] uppercase tracking-wider"
+              className="text-[10px] uppercase tracking-wider bg-brand-green/10 text-brand-green-deep border-brand-green/20 hover:bg-brand-green/20 rounded-full"
             >
               {page.page_type}
             </Badge>
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
+            <span className="text-xs text-slate flex items-center gap-1">
               <Eye className="h-3 w-3" />
               {page.view_count}
             </span>
@@ -54,23 +54,23 @@ export function ComparisonCard({ page }: { page: GeneratedPage }) {
                 )}
               </div>
             )}
-            <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1">
+            <CardTitle className="text-lg leading-tight text-ink group-hover:text-brand-green-deep transition-colors line-clamp-1">
               {toolNames}
             </CardTitle>
           </div>
         </CardHeader>
 
         <CardContent>
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+          <p className="text-sm text-slate line-clamp-2 mb-4">
             {page.meta_description}
           </p>
-          <div className="flex items-center justify-between text-xs text-muted-foreground/60">
+          <div className="flex items-center justify-between text-xs text-slate/70">
             <span className="flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               {formattedDate}
             </span>
-            <span className="text-primary/80 font-medium group-hover:text-primary flex items-center gap-1 transition-colors">
-              Read more
+            <span className="text-brand-green-deep font-semibold group-hover:text-ink flex items-center gap-1 transition-colors">
+              Read comparison
               <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
             </span>
           </div>

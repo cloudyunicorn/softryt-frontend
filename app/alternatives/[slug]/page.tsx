@@ -95,12 +95,12 @@ export default async function AlternativesPage({
   const categoryFormatted = tool.category.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   return (
-    <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 sm:pt-32 sm:pb-16">
       {/* Back Navigation */}
       <div className="mb-8 flex justify-center sm:justify-start">
         <Link
           href={`/review/${tool.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors bg-muted/40 hover:bg-muted/80 px-4 py-2 rounded-full border border-border/50"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate hover:text-ink transition-colors bg-surface border border-hairline px-4 py-2 rounded-full"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to {tool.name} review
@@ -109,10 +109,10 @@ export default async function AlternativesPage({
 
       {/* Header */}
       <div className="text-center sm:text-left mb-16">
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-blue-500 to-indigo-400 bg-clip-text text-transparent">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-ink">
           Best {tool.name} Alternatives
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto sm:mx-0">
+        <p className="text-lg text-slate max-w-2xl mx-auto sm:mx-0">
           Looking for an alternative to {tool.name}? We've compiled the best {categoryFormatted} tools to help you find the perfect fit for your team in 2026.
         </p>
       </div>
@@ -124,36 +124,36 @@ export default async function AlternativesPage({
             const reviewSlug = reviewMap[alt.id];
             
             return (
-              <Card key={alt.id} className="flex flex-col h-full bg-card/50 hover:bg-card border-border/50 transition-colors">
+              <Card key={alt.id} className="flex flex-col h-full bg-card border border-hairline rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
                 <CardHeader className="flex flex-row items-center gap-4 pb-4">
                   {alt.logo_url ? (
-                    <div className="h-12 w-12 rounded-xl bg-white flex items-center justify-center p-2 shadow-sm shrink-0">
+                    <div className="h-12 w-12 rounded-lg bg-white flex items-center justify-center p-2 border border-hairline shadow-sm shrink-0">
                       <img src={alt.logo_url} alt={`${alt.name} logo`} className="max-h-full max-w-full object-contain" />
                     </div>
                   ) : (
-                    <div className="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
-                      <span className="text-blue-600 font-bold text-lg">{alt.name.charAt(0)}</span>
+                    <div className="h-12 w-12 rounded-lg bg-brand-tag/15 border border-brand-tag/25 flex items-center justify-center shrink-0">
+                      <span className="text-brand-tag font-bold text-lg">{alt.name.charAt(0)}</span>
                     </div>
                   )}
                   <div>
-                    <CardTitle className="text-xl">{alt.name}</CardTitle>
-                    <CardDescription className="line-clamp-1 mt-1">{alt.description || `${alt.name} is a powerful ${categoryFormatted} tool.`}</CardDescription>
+                    <CardTitle className="text-xl text-ink">{alt.name}</CardTitle>
+                    <CardDescription className="text-slate line-clamp-1 mt-1">{alt.description || `${alt.name} is a powerful ${categoryFormatted} tool.`}</CardDescription>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  <p className="text-foreground/80 leading-relaxed text-sm">
+                  <p className="text-charcoal leading-relaxed text-sm">
                     {alt.name} is an excellent alternative to {tool.name}. It offers competitive pricing and features specifically designed for modern teams looking for a reliable {categoryFormatted} solution.
                   </p>
                 </CardContent>
                 <CardFooter className="flex flex-wrap gap-3 pt-2">
                   <Link href={alt.affiliate_url || alt.website_url || "#"} target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[120px]">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-500 text-white shadow-sm transition-colors">
+                    <Button className="w-full bg-ink hover:bg-charcoal text-canvas rounded-full transition-colors font-medium">
                       Visit Website <ExternalLink className="ml-2 h-3.5 w-3.5" />
                     </Button>
                   </Link>
                   {reviewSlug && (
                     <Link href={`/${reviewSlug}`} className="flex-1 min-w-[120px]">
-                      <Button variant="outline" className="w-full">
+                      <Button variant="outline" className="w-full rounded-full border border-hairline text-ink hover:bg-surface transition-colors font-medium">
                         Read Review <ArrowRight className="ml-2 h-3.5 w-3.5" />
                       </Button>
                     </Link>
@@ -164,8 +164,8 @@ export default async function AlternativesPage({
           })}
         </div>
       ) : (
-        <div className="text-center py-16 border border-border/50 rounded-2xl bg-muted/20">
-          <p className="text-muted-foreground">We couldn't find any direct alternatives to {tool.name} in our database yet.</p>
+        <div className="text-center py-16 border border-dashed border-hairline rounded-lg bg-surface">
+          <p className="text-slate">We couldn't find any direct alternatives to {tool.name} in our database yet.</p>
         </div>
       )}
     </div>

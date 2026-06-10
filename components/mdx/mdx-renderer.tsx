@@ -415,7 +415,7 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
     UsageSection: createDataWrapper(UsageSection),
     ReviewVerdict: createDataWrapper(ReviewVerdict),
     table: (props: any) => (
-      <div className="w-full overflow-x-auto my-8 border border-border/50 rounded-xl">
+      <div className="w-full overflow-x-auto my-8 border border-hairline rounded-lg">
         <table {...props} className="w-full border-collapse min-w-[500px]" />
       </div>
     ),

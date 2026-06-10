@@ -23,18 +23,18 @@ export default async function ReviewsPage() {
   const typedPages = (pages || []) as GeneratedPage[];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 min-h-screen">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-20 min-h-screen">
       <div className="mb-10">
         <Link href="/">
-          <Button variant="ghost" size="sm" className="mb-6 -ml-3 text-muted-foreground hover:text-emerald-500">
+          <Button variant="ghost" size="sm" className="mb-6 -ml-3 text-slate hover:text-ink hover:bg-surface rounded-md cursor-pointer">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
         </Link>
-        <h1 className="text-4xl font-bold tracking-tight mb-4">
+        <h1 className="text-4xl font-bold tracking-tight text-ink mb-4">
           All Reviews
         </h1>
-        <p className="text-muted-foreground text-lg max-w-2xl">
+        <p className="text-slate text-lg max-w-2xl leading-relaxed">
           Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools.
         </p>
       </div>
@@ -46,12 +46,12 @@ export default async function ReviewsPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 border border-dashed border-border/50 rounded-2xl bg-muted/10">
-          <Zap className="h-10 w-10 text-muted-foreground/40 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-muted-foreground mb-2">
+        <div className="text-center py-24 border border-dashed border-hairline rounded-lg bg-surface">
+          <Zap className="h-10 w-10 text-stone mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-ink mb-2">
             No reviews yet
           </h3>
-          <p className="text-sm text-muted-foreground/60">
+          <p className="text-sm text-slate">
             Reviews will appear here once analyzed by our AI.
           </p>
         </div>
