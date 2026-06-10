@@ -108,7 +108,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ── HERO SECTION ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-hero-sky-from/35 via-hero-sky-to/15 to-background">
+      <section className="relative overflow-hidden bg-hero-glow bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-36 sm:pb-24">
           <div className="text-center max-w-3xl mx-auto">
             {/* Badge */}
@@ -120,7 +120,7 @@ export default async function HomePage() {
             {/* Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink mb-6">
               Find the{" "}
-              <span className="bg-gradient-to-r from-brand-blue via-brand-red via-brand-yellow to-brand-green bg-clip-text text-transparent animate-gradient-xy">
+              <span className="animate-text-gradient bg-clip-text text-transparent">
                 right tool
               </span>{" "}
               for your team
