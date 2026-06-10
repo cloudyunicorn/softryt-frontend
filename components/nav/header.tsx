@@ -132,7 +132,10 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="fixed top-0 left-0 z-50 w-full px-4 sm:px-6 lg:px-8 pt-4 pb-2 bg-transparent pointer-events-none">
+    <header
+      className="fixed top-0 left-0 z-50 w-full px-4 sm:px-6 lg:px-8 pt-4 pb-2 bg-transparent pointer-events-none"
+      style={{ viewTransitionName: "site-header" }}
+    >
       <div className="max-w-7xl mx-auto flex h-14 items-center justify-between px-6 bg-[#0a0a0f]/70 backdrop-blur-xl border border-white/8 rounded-full shadow-lg shadow-black/20 pointer-events-auto">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">

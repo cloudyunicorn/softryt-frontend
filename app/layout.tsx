@@ -6,6 +6,8 @@ import { Footer } from "@/components/nav/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
+import { Suspense } from "react";
+import { InitialLoader, ProgressBar } from "@/components/ui/page-loader";
 import "./globals.css";
 
 const inter = Inter({
@@ -62,6 +64,11 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <InitialLoader />
+        <Suspense fallback={null}>
+          <ProgressBar />
+        </Suspense>
+        
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RSSCEMH5MP"
           strategy="afterInteractive"
@@ -84,3 +91,4 @@ export default function RootLayout({
     </html>
   );
 }
+
