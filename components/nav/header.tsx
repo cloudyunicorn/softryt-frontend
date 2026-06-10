@@ -24,6 +24,93 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
+  const [activeHash, setActiveHash] = useState("/");
+
+  const [activeTabRect, setActiveTabRect] = useState<{ left: number; width: number } | null>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const activeTabRef = useRef<HTMLAnchorElement | null>(null);
+
+  // Scroll spy IntersectionObserver for homepage sections
+  useEffect(() => {
+    if (pathname !== "/") {
+      return;
+    }
+
+    const sections = ["hero", "comparisons", "categories"];
+    const observers = sections.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (id === "hero") {
+                setActiveHash("/");
+              } else {
+                setActiveHash(`/#${id}`);
+              }
+            }
+          });
+        },
+        {
+          rootMargin: "-25% 0px -55% 0px", // Trigger when section is in view focus
+          threshold: 0,
+        }
+      );
+
+      observer.observe(el);
+      return { observer, el };
+    });
+
+    return () => {
+      observers.forEach((obs) => {
+        if (obs) {
+          obs.observer.unobserve(obs.el);
+        }
+      });
+    };
+  }, [pathname]);
+
+  // Determine if a link should be styled as active
+  const isLinkActive = (href: string) => {
+    if (pathname !== "/") {
+      const linkPathname = href.split("#")[0];
+      if (linkPathname === "/") return false;
+      return pathname.startsWith(linkPathname);
+    } else {
+      if (href === "/") {
+        return activeHash === "" || activeHash === "/";
+      }
+      return activeHash === href;
+    }
+  };
+
+  // Recalculate the active tab's bounding rect for the sliding transition
+  useEffect(() => {
+    function updateRect() {
+      if (activeTabRef.current && tabsContainerRef.current) {
+        const containerRect = tabsContainerRef.current.getBoundingClientRect();
+        const activeRect = activeTabRef.current.getBoundingClientRect();
+        
+        setActiveTabRect({
+          left: activeRect.left - containerRect.left,
+          width: activeRect.width,
+        });
+      } else {
+        setActiveTabRect(null);
+      }
+    }
+
+    updateRect();
+    const timeoutId = setTimeout(updateRect, 100);
+
+    window.addEventListener("resize", updateRect);
+    return () => {
+      window.removeEventListener("resize", updateRect);
+      clearTimeout(timeoutId);
+    };
+  }, [activeHash, pathname]);
 
   // Close the mobile dropdown when clicking anywhere outside of it
   useEffect(() => {
@@ -58,17 +145,32 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation (Unified Modern Tabs) */}
-        <nav className="hidden md:flex items-center gap-1 bg-surface/30 border border-hairline/80 rounded-full p-1.5 shadow-inner shadow-black/5">
+        <nav 
+          ref={tabsContainerRef}
+          className="hidden md:flex relative items-center gap-1 bg-surface/30 border border-hairline/80 rounded-full p-1.5 shadow-inner shadow-black/5"
+        >
+          {/* Sliding active tab indicator */}
+          {activeTabRect && (
+            <div 
+              className="absolute top-1.5 bottom-1.5 bg-card border border-hairline shadow-sm rounded-full transition-all duration-300 ease-out"
+              style={{
+                left: `${activeTabRect.left}px`,
+                width: `${activeTabRect.width}px`,
+              }}
+            />
+          )}
+
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
+            const isActive = isLinkActive(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-all duration-300 rounded-full border ${
+                ref={isActive ? (el => { activeTabRef.current = el; }) : null}
+                className={`relative z-10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider transition-colors duration-300 rounded-full ${
                   isActive
-                    ? "bg-card text-ink border-hairline shadow-sm"
-                    : "text-slate hover:text-ink hover:bg-card/40 border-transparent hover:border-hairline/30"
+                    ? "text-ink"
+                    : "text-slate hover:text-ink"
                 }`}
               >
                 {link.label}
@@ -113,7 +215,7 @@ export function Header() {
             <div className="absolute right-0 top-full mt-3 w-[220px] z-50 animate-in fade-in slide-in-from-top-3 zoom-in-95 duration-200 origin-top-right">
               <div className="bg-card/95 backdrop-blur-2xl border border-hairline shadow-lg rounded-2xl p-2.5 flex flex-col gap-1.5">
                 {navLinks.map((link) => {
-                  const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
+                  const isActive = isLinkActive(link.href);
                   return (
                     <Link
                       key={link.href}

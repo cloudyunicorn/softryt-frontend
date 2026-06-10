@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
-import { ComparisonCard } from "@/components/comparison-card";
+import { SearchableComparisons } from "@/components/searchable-comparisons";
 import type { GeneratedPage } from "@/lib/types";
-import { Zap, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -39,23 +39,7 @@ export default async function ComparisonsPage() {
         </p>
       </div>
 
-      {typedPages.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {typedPages.map((page) => (
-            <ComparisonCard key={page.id} page={page} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-24 border border-dashed border-hairline rounded-lg bg-surface">
-          <Zap className="h-10 w-10 text-stone mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-ink mb-2">
-            No comparisons yet
-          </h3>
-          <p className="text-sm text-slate">
-            Comparisons will appear here once analyzed by our AI.
-          </p>
-        </div>
-      )}
+      <SearchableComparisons initialPages={typedPages} />
     </div>
   );
 }

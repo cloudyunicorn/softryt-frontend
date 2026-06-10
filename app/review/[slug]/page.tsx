@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 import { MdxContent } from "@/components/mdx/mdx-renderer";
 import { JsonLd } from "@/components/seo/json-ld";
 import type { GeneratedPage, PageSlug } from "@/lib/types";
-import { ArrowLeft, Calendar, Eye } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -126,10 +126,6 @@ export default async function ReviewPage({
             <span className="text-slate text-xs font-medium flex items-center gap-1.5 px-2">
               <Calendar className="h-3.5 w-3.5" />
               Updated {formattedDate}
-            </span>
-            <span className="text-slate text-xs font-medium flex items-center gap-1.5 px-2">
-              <Eye className="h-3.5 w-3.5" />
-              {typedPage.view_count.toLocaleString()} views
             </span>
           </div>
         </header>

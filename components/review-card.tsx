@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Calendar, ArrowRight, ShieldCheck } from "lucide-react";
+import { Calendar, ArrowRight, ShieldCheck } from "lucide-react";
 import type { GeneratedPage } from "@/lib/types";
 
 export function ReviewCard({ page }: { page: GeneratedPage }) {
@@ -29,10 +29,6 @@ export function ReviewCard({ page }: { page: GeneratedPage }) {
             >
               {page.page_type}
             </Badge>
-            <span className="text-xs text-slate flex items-center gap-1">
-              <Eye className="h-3 w-3" />
-              {page.view_count}
-            </span>
           </div>
           
           <div className="flex items-center gap-3 mb-2">

@@ -17,7 +17,7 @@ import { supabase } from "@/lib/supabase";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Eye, ArrowLeft, BookOpen, ArrowRight } from "lucide-react";
+import { Calendar, ArrowLeft, BookOpen, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { MdxContent } from "@/components/mdx/mdx-renderer";
 import type { GeneratedPage } from "@/lib/types";
@@ -175,10 +175,6 @@ export default async function ComparisonPage({
             <span className="text-slate text-xs font-medium flex items-center gap-1.5 px-2">
               <Calendar className="h-3.5 w-3.5" />
               Updated {formattedDate}
-            </span>
-            <span className="text-slate text-xs font-medium flex items-center gap-1.5 px-2">
-              <Eye className="h-3.5 w-3.5" />
-              {typedPage.view_count.toLocaleString()} views
             </span>
           </div>
 

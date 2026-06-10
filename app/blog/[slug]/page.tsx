@@ -11,7 +11,7 @@ import { supabase } from "@/lib/supabase";
 import { MdxContent } from "@/components/mdx/mdx-renderer";
 import { JsonLd } from "@/components/seo/json-ld";
 import type { BlogPost } from "@/lib/types";
-import { ArrowLeft, Calendar, Clock, Eye } from "lucide-react";
+import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
@@ -167,10 +167,6 @@ export default async function BlogPostPage({
             <span className="flex items-center gap-1.5">
               <Clock className="h-3.5 w-3.5" />
               {readTime} min read
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Eye className="h-3.5 w-3.5" />
-              {typedPost.view_count.toLocaleString()} views
             </span>
           </div>
         </header>

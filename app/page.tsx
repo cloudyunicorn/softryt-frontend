@@ -17,13 +17,13 @@ import { Separator } from "@/components/ui/separator";
 import { ComparisonCard } from "@/components/comparison-card";
 import { ReviewCard } from "@/components/review-card";
 import { BlogCard } from "@/components/blog-card";
+import { GlobalSearch } from "@/components/global-search";
 import {
   Zap,
   ArrowRight,
   BarChart3,
   Shield,
   RefreshCw,
-  Eye,
   Calendar,
   Layers,
   Code,
@@ -78,10 +78,16 @@ export default async function HomePage() {
     .order("published_at", { ascending: false })
     .limit(3);
 
+  // Fetch all searchable comparisons and reviews for the global search bar
+  const { data: searchableItems } = await supabase
+    .from("generated_pages")
+    .select("slug, title, page_type, meta_description")
+    .eq("published_status", "published");
+
   // Fetch tool categories and counts
   const { data: tools } = await supabase
     .from("tools")
-    .select("category")
+    .select("name, logo_url, category")
     .eq("is_active", true);
 
   // Count tools per category
@@ -89,6 +95,34 @@ export default async function HomePage() {
   (tools || []).forEach((tool) => {
     categoryCounts[tool.category] = (categoryCounts[tool.category] || 0) + 1;
   });
+
+  // Extract and order featured tools for the logos row
+  const targetFeaturedTools = [
+    "Notion",
+    "Figma",
+    "Slack",
+    "Vercel",
+    "ChatGPT",
+    "Claude",
+    "Supabase",
+    "Linear",
+    "Monday.com",
+    "ClickUp",
+    "Asana",
+    "Trello",
+    "Jira",
+    "GitHub Copilot",
+    "Zoom",
+    "Loom",
+    "Canva",
+    "PostHog",
+    "Resend",
+    "Gemini"
+  ];
+
+  const featuredTools = targetFeaturedTools
+    .map((name) => (tools || []).find((t) => t.name.toLowerCase() === name.toLowerCase()))
+    .filter((t): t is { name: string; logo_url: string; category: string } => !!(t && t.logo_url));
 
   const typedPages = (pages || []) as GeneratedPage[];
   const typedReviewPages = (reviewPages || []) as GeneratedPage[];
@@ -108,7 +142,7 @@ export default async function HomePage() {
   return (
     <>
       {/* ── HERO SECTION ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-hero-glow bg-background">
+      <section id="hero" className="relative overflow-hidden bg-hero-glow bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-36 sm:pb-24">
           <div className="text-center max-w-3xl mx-auto">
             {/* Badge */}
@@ -131,6 +165,9 @@ export default async function HomePage() {
               Data-driven SaaS comparisons powered by in-depth analysis
               and AI insights. Stop guessing, start comparing.
             </p>
+
+            {/* Global Search Bar */}
+            <GlobalSearch items={searchableItems || []} />
 
             {/* CTA */}
             <div className="flex flex-wrap items-center justify-center gap-4 max-w-4xl mx-auto">
@@ -161,15 +198,7 @@ export default async function HomePage() {
                   <PenLine className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="#categories" className="w-auto">
-                <Button
-                  size="lg"
-                  className="rounded-full border border-hairline bg-card text-ink font-medium hover:bg-surface transition-all duration-300 px-5 sm:px-8 h-10 sm:h-12 text-sm sm:text-base cursor-pointer w-[215px] sm:w-[230px]"
-                >
-                  Explore Categories
-                  <Layers className="ml-2 h-4 w-4 text-brand-yellow" />
-                </Button>
-              </Link>
+
             </div>
           </div>
 
@@ -190,6 +219,34 @@ export default async function HomePage() {
                 <p className="text-xs text-slate mt-1">
                   {stat.label}
                 </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BRAND LOGOS ROW ────────────────────────────────── */}
+      <section className="border-b border-hairline bg-canvas/30 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-[10px] uppercase tracking-[0.2em] font-semibold text-slate mb-8">
+            Compare tools from
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-5 max-w-5xl mx-auto">
+            {featuredTools.map((tool) => (
+              <div
+                key={tool.name}
+                className="flex items-center gap-2 text-slate hover:text-ink transition-colors duration-300 group cursor-pointer"
+              >
+                <div className="w-6 h-6 rounded bg-white/95 p-0.5 border border-hairline/60 flex items-center justify-center shrink-0 opacity-60 group-hover:opacity-100 transition-all duration-300">
+                  <img
+                    src={tool.logo_url}
+                    alt={`${tool.name} Logo`}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <span className="font-semibold text-sm tracking-wide">
+                  {tool.name}
+                </span>
               </div>
             ))}
           </div>
@@ -249,9 +306,13 @@ export default async function HomePage() {
               </p>
             </div>
             <Link href="/comparisons">
-              <Button variant="ghost" size="sm" className="group text-slate hover:text-ink font-medium cursor-pointer">
-                View all
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <Button
+                variant="outline"
+                size="sm"
+                className="group rounded-full border border-brand-blue/30 bg-brand-blue/5 hover:bg-brand-blue/15 hover:border-brand-blue/60 text-brand-blue font-semibold px-4 py-1.5 transition-all duration-300 cursor-pointer shadow-sm shadow-brand-blue/5"
+              >
+                View all comparisons
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
@@ -289,9 +350,13 @@ export default async function HomePage() {
               </p>
             </div>
             <Link href="/reviews">
-              <Button variant="ghost" size="sm" className="group text-brand-green-deep hover:text-ink font-semibold cursor-pointer">
-                View all
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <Button
+                variant="outline"
+                size="sm"
+                className="group rounded-full border border-brand-green/30 bg-brand-green/5 hover:bg-brand-green/15 hover:border-brand-green/60 text-brand-green-deep font-semibold px-4 py-1.5 transition-all duration-300 cursor-pointer shadow-sm shadow-brand-green/5"
+              >
+                View all reviews
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
@@ -329,9 +394,13 @@ export default async function HomePage() {
               </p>
             </div>
             <Link href="/blog">
-              <Button variant="ghost" size="sm" className="group text-slate hover:text-ink font-medium cursor-pointer">
+              <Button
+                variant="outline"
+                size="sm"
+                className="group rounded-full border border-brand-red/30 bg-brand-red/5 hover:bg-brand-red/15 hover:border-brand-red/60 text-brand-red font-semibold px-4 py-1.5 transition-all duration-300 cursor-pointer shadow-sm shadow-brand-red/5"
+              >
                 View all blog posts
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
           </div>
