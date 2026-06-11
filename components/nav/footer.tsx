@@ -32,7 +32,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-ink">Quick Links</h4>
+            <div className="text-sm font-semibold text-ink">Quick Links</div>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-sm text-steel hover:text-ink transition-colors">
@@ -64,7 +64,7 @@ export function Footer() {
 
           {/* Categories */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-ink">Categories</h4>
+            <div className="text-sm font-semibold text-ink">Categories</div>
             <ul className="space-y-2">
               {["Project Management", "Developer Tools", "AI Tools", "Design", "Analytics"].map(
                 (cat) => (
@@ -80,7 +80,7 @@ export function Footer() {
 
           {/* Company */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-ink">Company</h4>
+            <div className="text-sm font-semibold text-ink">Company</div>
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-sm text-steel hover:text-ink transition-colors">
@@ -103,7 +103,7 @@ export function Footer() {
             © {currentYear} Cloudy Unicorn. All rights reserved.
           </p>
           <p className="text-xs text-steel/60">
-            Some links are affiliate links. We may earn a commission at no cost to you.
+            Some links are affiliate links. We may earn a commission at no cost to you. Built with <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline">Next.js</a>, powered by <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline">Supabase</a> and hosted on <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" className="hover:text-ink transition-colors underline">Netlify</a>.
           </p>
         </div>
       </div>
