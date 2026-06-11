@@ -168,8 +168,7 @@ export default async function HomePage() {
 
             {/* Subheading */}
             <p className="text-lg sm:text-xl text-slate leading-relaxed mb-8 max-w-2xl mx-auto font-normal">
-              Data-driven SaaS comparisons powered by in-depth analysis
-              and AI insights. Stop guessing, start comparing.
+              Stop guessing and start comparing with data-driven SaaS comparisons powered by in-depth analysis and verified AI insights.
             </p>
 
             {/* Global Search Bar */}
@@ -268,19 +267,19 @@ export default async function HomePage() {
                 icon: <BarChart3 className="h-5 w-5 text-brand-tag" />,
                 title: "Real Data",
                 description:
-                  "Pricing and features analyzed directly from official sources. No outdated info.",
+                  "We analyze pricing and features directly from official sources to ensure you never make decisions based on outdated information.",
               },
               {
                 icon: <Shield className="h-5 w-5 text-brand-green-deep" />,
                 title: "AI Fact-Checked",
                 description:
-                  "Every comparison is verified by a dedicated AI fact-checker for accuracy.",
+                  "Every single tool comparison is rigorously verified by a dedicated AI fact-checker to ensure absolute data accuracy and reliability.",
               },
               {
                 icon: <RefreshCw className="h-5 w-5 text-brand-tag" />,
                 title: "Always Fresh",
                 description:
-                  "Weekly analysis detects pricing changes and keeps content up to date.",
+                  "Our automated weekly analysis continuously monitors pricing updates and feature changes to keep all platform content up to date.",
               },
             ].map((prop) => (
               <div key={prop.title} className="flex gap-4">
@@ -480,9 +479,8 @@ export default async function HomePage() {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-ink mb-4">
             Can&apos;t find the comparison you need?
           </h2>
-          <p className="text-slate mb-8 max-w-md mx-auto">
-            We&apos;re constantly adding new tools and comparisons. Check back
-            soon or let us know what you&apos;d like to see.
+          <p className="text-slate mb-8 max-w-xl mx-auto">
+            We are constantly analyzing and adding new software tools to our directory, so check back regularly or contact us to request a custom comparison.
           </p>
           <Link href="/comparisons">
             <Button
