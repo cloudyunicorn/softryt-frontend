@@ -19,7 +19,7 @@ export function Footer() {
           <div className="space-y-3">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="flex items-center justify-center w-8 h-8 transition-transform group-hover:scale-105">
-                <img src="/logo.png" alt="Cloudy Unicorn" className="w-full h-full object-contain drop-shadow-sm" />
+                <img src="/logo.png" alt="Cloudy Unicorn Footer Logo" className="w-full h-full object-contain drop-shadow-sm" />
               </div>
               <span className="text-lg font-bold tracking-tight text-ink">
                 Cloudy <span className="bg-gradient-to-r from-brand-blue via-brand-red to-brand-green bg-clip-text text-transparent">Unicorn</span>
