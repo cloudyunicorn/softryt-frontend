@@ -10,6 +10,9 @@ export const revalidate = 86400; // 24 hours
 export const metadata = {
   title: "All SaaS Reviews | Cloudy Unicorn",
   description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools.",
+  alternates: {
+    canonical: "https://www.cloudyunicorn.com/reviews",
+  },
 };
 
 export default async function ReviewsPage() {

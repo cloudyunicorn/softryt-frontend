@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for Cloudy Unicorn",
+  alternates: {
+    canonical: "https://www.cloudyunicorn.com/privacy",
+  },
 };
 
 export default function PrivacyPage() {

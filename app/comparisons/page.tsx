@@ -10,6 +10,9 @@ export const revalidate = 86400; // 24 hours
 export const metadata = {
   title: "All SaaS Comparisons | Cloudy Unicorn",
   description: "Browse our complete directory of in-depth, AI-analyzed analysis and comparisons of the most popular B2B SaaS tools.",
+  alternates: {
+    canonical: "https://www.cloudyunicorn.com/comparisons",
+  },
 };
 
 export default async function ComparisonsPage() {

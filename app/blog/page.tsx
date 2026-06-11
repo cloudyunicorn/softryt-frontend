@@ -18,6 +18,9 @@ export const metadata = {
   title: "Blog | Cloudy Unicorn",
   description:
     "Insights, trends, and deep dives into B2B SaaS, AI tools, and enterprise technology from the Cloudy Unicorn team.",
+  alternates: {
+    canonical: "https://www.cloudyunicorn.com/blog",
+  },
 };
 
 export default async function BlogPage() {

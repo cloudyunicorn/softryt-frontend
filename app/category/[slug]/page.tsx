@@ -28,9 +28,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const categoryName = slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
+
   return {
     title: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
     description: `Browse top-rated ${categoryName} tools. Read in-depth reviews and compare pricing, features, and alternatives to find the best software for your business.`,
+    openGraph: {
+      title: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
+      description: `Browse top-rated ${categoryName} tools. Read in-depth reviews and compare pricing, features, and alternatives to find the best software for your business.`,
+      type: "website",
+      url: `${siteUrl}/category/${slug}`,
+    },
+    alternates: {
+      canonical: `${siteUrl}/category/${slug}`,
+    },
   };
 }
 

@@ -39,6 +39,8 @@ export async function generateMetadata({
 
   const categoryFormatted = tool.category.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
+
   return {
     title: `Best ${tool.name} Alternatives & Competitors (2026)`,
     description: `Looking for an alternative to ${tool.name}? Discover and compare the best ${categoryFormatted} tools and software in 2026.`,
@@ -46,6 +48,10 @@ export async function generateMetadata({
       title: `Best ${tool.name} Alternatives & Competitors (2026)`,
       description: `Looking for an alternative to ${tool.name}? Discover and compare the best ${categoryFormatted} tools and software in 2026.`,
       type: "website",
+      url: `${siteUrl}/alternatives/${slug}`,
+    },
+    alternates: {
+      canonical: `${siteUrl}/alternatives/${slug}`,
     },
   };
 }

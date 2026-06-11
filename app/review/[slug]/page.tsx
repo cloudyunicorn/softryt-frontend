@@ -48,6 +48,8 @@ export async function generateMetadata({
     };
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
+
   return {
     title: `${page.title} | Cloudy Unicorn`,
     description: page.meta_description,
@@ -55,6 +57,10 @@ export async function generateMetadata({
       title: page.title,
       description: page.meta_description,
       type: "article",
+      url: `${siteUrl}/review/${slug}`,
+    },
+    alternates: {
+      canonical: `${siteUrl}/review/${slug}`,
     },
   };
 }

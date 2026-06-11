@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us",
   description: "Learn more about Cloudy Unicorn and our mission to simplify SaaS discovery.",
+  alternates: {
+    canonical: "https://www.cloudyunicorn.com/about",
+  },
 };
 
 export default function AboutPage() {

@@ -47,7 +47,7 @@ export async function generateMetadata({
   }
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://cloudyunicorn.com";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
 
   return {
     title: `${post.title} | Cloudy Unicorn`,
@@ -60,6 +60,9 @@ export async function generateMetadata({
       ...(post.cover_image_url && {
         images: [{ url: post.cover_image_url }],
       }),
+    },
+    alternates: {
+      canonical: `${siteUrl}/blog/${slug}`,
     },
   };
 }
