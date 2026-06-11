@@ -29,10 +29,14 @@ export const metadata: Metadata = {
   description:
     "Find the right B2B SaaS tool for your team. AI-powered, data-driven comparison pages with real pricing and feature analysis.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://cloudyunicorn.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com"
   ),
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.png",
   },
   openGraph: {
     type: "website",
