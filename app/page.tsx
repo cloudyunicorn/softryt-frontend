@@ -52,43 +52,49 @@ const categoryIcons: Record<string, React.ReactNode> = {
 };
 
 export default async function HomePage() {
-// Fetch published comparison pages
-  const { data: pages, count: totalComparisons } = await supabase
-    .from("generated_pages")
-    .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)", { count: "exact" })
-    .eq("published_status", "published")
-    .eq("page_type", "comparison")
-    .order("updated_at", { ascending: false })
-    .limit(12);
+  // Fetch required data in parallel to reduce database fetch latency
+  const [
+    pagesResult,
+    reviewPagesResult,
+    blogPostsResult,
+    searchableItemsResult,
+    toolsResult
+  ] = await Promise.all([
+    supabase
+      .from("generated_pages")
+      .select("*, tool_a:tools!tool_a_id(logo_url), tool_b:tools!tool_b_id(logo_url)", { count: "exact" })
+      .eq("published_status", "published")
+      .eq("page_type", "comparison")
+      .order("updated_at", { ascending: false })
+      .limit(12),
+    supabase
+      .from("generated_pages")
+      .select("*, tool_a:tools!tool_a_id(logo_url)")
+      .eq("published_status", "published")
+      .eq("page_type", "review")
+      .order("updated_at", { ascending: false })
+      .limit(6),
+    supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("published_status", "published")
+      .order("published_at", { ascending: false })
+      .limit(3),
+    supabase
+      .from("generated_pages")
+      .select("slug, title, page_type, meta_description")
+      .eq("published_status", "published"),
+    supabase
+      .from("tools")
+      .select("name, logo_url, category")
+      .eq("is_active", true)
+  ]);
 
-  // Fetch published review pages
-  const { data: reviewPages } = await supabase
-    .from("generated_pages")
-    .select("*, tool_a:tools!tool_a_id(logo_url)")
-    .eq("published_status", "published")
-    .eq("page_type", "review")
-    .order("updated_at", { ascending: false })
-    .limit(6);
-
-  // Fetch published blog posts
-  const { data: blogPosts } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("published_status", "published")
-    .order("published_at", { ascending: false })
-    .limit(3);
-
-  // Fetch all searchable comparisons and reviews for the global search bar
-  const { data: searchableItems } = await supabase
-    .from("generated_pages")
-    .select("slug, title, page_type, meta_description")
-    .eq("published_status", "published");
-
-  // Fetch tool categories and counts
-  const { data: tools } = await supabase
-    .from("tools")
-    .select("name, logo_url, category")
-    .eq("is_active", true);
+  const { data: pages, count: totalComparisons } = pagesResult;
+  const { data: reviewPages } = reviewPagesResult;
+  const { data: blogPosts } = blogPostsResult;
+  const { data: searchableItems } = searchableItemsResult;
+  const { data: tools } = toolsResult;
 
   // Count tools per category
   const categoryCounts: Record<string, number> = {};

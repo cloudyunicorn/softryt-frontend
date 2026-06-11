@@ -36,7 +36,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-sm text-steel hover:text-ink transition-colors">
-                  Home
+                  Go to Homepage
                 </Link>
               </li>
               <li>
@@ -46,17 +46,17 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/reviews" className="text-sm text-steel hover:text-ink transition-colors">
-                  Reviews
+                  SaaS Reviews
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="text-sm text-steel hover:text-ink transition-colors">
-                  Blog
+                  Resource Blog
                 </Link>
               </li>
               <li>
                 <Link href="/#categories" className="text-sm text-steel hover:text-ink transition-colors">
-                  Categories
+                  Software Categories
                 </Link>
               </li>
             </ul>
