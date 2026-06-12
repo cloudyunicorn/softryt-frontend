@@ -113,15 +113,17 @@ export default async function AlternativesPage({
   return (
     <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 sm:pt-32 sm:pb-16">
       {/* Back Navigation */}
-      <div className="mb-8 flex justify-center sm:justify-start">
-        <Link
-          href={`/review/${tool.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate hover:text-ink transition-colors bg-surface border border-hairline px-4 py-2 rounded-full"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to {tool.name} review
-        </Link>
-      </div>
+      {reviewMap[tool.id] && (
+        <div className="mb-8 flex justify-center sm:justify-start">
+          <Link
+            href={`/${reviewMap[tool.id]}`}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-slate hover:text-ink transition-colors bg-surface border border-hairline px-4 py-2 rounded-full"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to {tool.name} review
+          </Link>
+        </div>
+      )}
 
       {/* Header */}
       <div className="text-center sm:text-left mb-16">
