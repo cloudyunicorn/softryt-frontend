@@ -160,7 +160,7 @@ export default async function AlternativesPage({
                   </p>
                 </CardContent>
                 <CardFooter className="flex flex-wrap gap-3 pt-2">
-                  <Link href={alt.affiliate_url || alt.website_url || "#"} target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[120px]">
+                  <Link href={`/api/go/${alt.slug}`} target="_blank" rel="nofollow noopener noreferrer" className="flex-1 min-w-[120px]">
                     <Button className="w-full bg-ink hover:bg-charcoal text-canvas rounded-full transition-colors font-medium">
                       Visit Website <ExternalLink className="ml-2 h-3.5 w-3.5" />
                     </Button>

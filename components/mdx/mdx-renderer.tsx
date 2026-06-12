@@ -414,6 +414,34 @@ export function MdxContent({ source, toolAName, toolBName, toolALogo, toolBLogo 
     )),
     UsageSection: createDataWrapper(UsageSection),
     ReviewVerdict: createDataWrapper(ReviewVerdict),
+    a: (props: any) => {
+      let href = props.href;
+      
+      const redirectMap: Record<string, string> = {
+        "https://openai.com/privacy": "https://openai.com/policies/privacy-policy/",
+        "https://openai.com/terms": "https://openai.com/policies/terms-of-use/",
+        "https://chat.openai.com/": "https://chatgpt.com/",
+        "https://chat.openai.com": "https://chatgpt.com/",
+        "https://claude.ai/": "https://claude.ai",
+      };
+
+      if (href && redirectMap[href]) {
+        href = redirectMap[href];
+      }
+
+      const isExternal = href?.startsWith("http");
+
+      return (
+        <a
+          {...props}
+          href={href}
+          {...(isExternal && {
+            target: "_blank",
+            rel: "noopener noreferrer nofollow",
+          })}
+        />
+      );
+    },
     table: (props: any) => (
       <div className="w-full overflow-x-auto my-8 border border-hairline rounded-lg">
         <table {...props} className="w-full border-collapse min-w-[500px]" />
