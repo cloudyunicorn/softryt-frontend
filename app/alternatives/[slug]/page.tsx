@@ -49,6 +49,14 @@ export async function generateMetadata({
       description: `Looking for an alternative to ${tool.name}? Discover and compare the best ${categoryFormatted} tools and software in 2026.`,
       type: "website",
       url: `${siteUrl}/alternatives/${slug}`,
+      images: [
+        {
+          url: "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: `Best ${tool.name} Alternatives & Competitors (2026)`,
+        },
+      ],
     },
     alternates: {
       canonical: `${siteUrl}/alternatives/${slug}`,

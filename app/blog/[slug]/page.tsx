@@ -57,9 +57,14 @@ export async function generateMetadata({
       description: post.meta_description,
       type: "article",
       url: `${siteUrl}/blog/${slug}`,
-      ...(post.cover_image_url && {
-        images: [{ url: post.cover_image_url }],
-      }),
+      images: [
+        {
+          url: post.cover_image_url || "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     alternates: {
       canonical: `${siteUrl}/blog/${slug}`,

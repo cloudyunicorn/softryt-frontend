@@ -58,6 +58,14 @@ export async function generateMetadata({
       description: page.meta_description,
       type: "article",
       url: `${siteUrl}/review/${slug}`,
+      images: [
+        {
+          url: "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
     },
     alternates: {
       canonical: `${siteUrl}/review/${slug}`,

@@ -78,6 +78,14 @@ export async function generateMetadata({
       siteName: "Cloudy Unicorn",
       type: "article",
       modifiedTime: page.updated_at,
+      images: [
+        {
+          url: "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",

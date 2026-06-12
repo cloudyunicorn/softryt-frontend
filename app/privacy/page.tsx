@@ -6,6 +6,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.cloudyunicorn.com/privacy",
   },
+  openGraph: {
+    title: "Privacy Policy | Cloudy Unicorn",
+    description: "Privacy Policy for Cloudy Unicorn",
+    url: "https://www.cloudyunicorn.com/privacy",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cloudy Unicorn Privacy Policy",
+      },
+    ],
+  },
 };
 
 export default function PrivacyPage() {

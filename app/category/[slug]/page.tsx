@@ -38,6 +38,14 @@ export async function generateMetadata({
       description: `Browse top-rated ${categoryName} tools. Read in-depth reviews and compare pricing, features, and alternatives to find the best software for your business.`,
       type: "website",
       url: `${siteUrl}/category/${slug}`,
+      images: [
+        {
+          url: "/logo.png",
+          width: 1200,
+          height: 630,
+          alt: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
+        },
+      ],
     },
     alternates: {
       canonical: `${siteUrl}/category/${slug}`,

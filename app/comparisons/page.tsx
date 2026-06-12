@@ -13,6 +13,19 @@ export const metadata = {
   alternates: {
     canonical: "https://www.cloudyunicorn.com/comparisons",
   },
+  openGraph: {
+    title: "All SaaS Comparisons | Cloudy Unicorn",
+    description: "Browse our complete directory of in-depth, AI-analyzed analysis and comparisons of the most popular B2B SaaS tools.",
+    url: "https://www.cloudyunicorn.com/comparisons",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "All SaaS Comparisons | Cloudy Unicorn",
+      },
+    ],
+  },
 };
 
 export default async function ComparisonsPage() {

@@ -6,6 +6,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.cloudyunicorn.com/about",
   },
+  openGraph: {
+    title: "About Us | Cloudy Unicorn",
+    description: "Learn more about Cloudy Unicorn and our mission to simplify SaaS discovery.",
+    url: "https://www.cloudyunicorn.com/about",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "About Cloudy Unicorn",
+      },
+    ],
+  },
 };
 
 export default function AboutPage() {

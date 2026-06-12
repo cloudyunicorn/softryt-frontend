@@ -44,6 +44,15 @@ export const metadata: Metadata = {
     title: "Cloudy Unicorn — AI-Powered SaaS Comparison Platform",
     description:
       "Find the right B2B SaaS tool for your team. AI-powered, data-driven comparison pages with real pricing and feature analysis.",
+    url: "https://www.cloudyunicorn.com",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cloudy Unicorn — AI-Powered SaaS Comparison Platform",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

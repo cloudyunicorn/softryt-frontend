@@ -13,6 +13,19 @@ export const metadata = {
   alternates: {
     canonical: "https://www.cloudyunicorn.com/reviews",
   },
+  openGraph: {
+    title: "All SaaS Reviews | Cloudy Unicorn",
+    description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools.",
+    url: "https://www.cloudyunicorn.com/reviews",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "All SaaS Reviews | Cloudy Unicorn",
+      },
+    ],
+  },
 };
 
 export default async function ReviewsPage() {

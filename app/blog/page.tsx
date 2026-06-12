@@ -21,6 +21,20 @@ export const metadata = {
   alternates: {
     canonical: "https://www.cloudyunicorn.com/blog",
   },
+  openGraph: {
+    title: "Blog | Cloudy Unicorn",
+    description:
+      "Insights, trends, and deep dives into B2B SaaS, AI tools, and enterprise technology from the Cloudy Unicorn team.",
+    url: "https://www.cloudyunicorn.com/blog",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Cloudy Unicorn Blog",
+      },
+    ],
+  },
 };
 
 export default async function BlogPage() {
