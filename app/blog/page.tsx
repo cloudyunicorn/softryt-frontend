@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 export const revalidate = 86400; // 24 hours
 
 export const metadata = {
-  title: "Blog | Cloudy Unicorn",
+  title: "Blog",
   description:
     "Insights, trends, and deep dives into B2B SaaS, AI tools, and enterprise technology from the Cloudy Unicorn team.",
   alternates: {

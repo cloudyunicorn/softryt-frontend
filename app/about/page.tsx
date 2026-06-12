@@ -2,13 +2,13 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn more about Cloudy Unicorn and our mission to simplify SaaS discovery.",
+  description: "Learn about Cloudy Unicorn's mission to simplify SaaS discovery. Discover how our AI-powered, data-driven comparison platform helps you find the right tools.",
   alternates: {
     canonical: "https://www.cloudyunicorn.com/about",
   },
   openGraph: {
     title: "About Us | Cloudy Unicorn",
-    description: "Learn more about Cloudy Unicorn and our mission to simplify SaaS discovery.",
+    description: "Learn about Cloudy Unicorn's mission to simplify SaaS discovery. Discover how our AI-powered, data-driven comparison platform helps you find the right tools.",
     url: "https://www.cloudyunicorn.com/about",
     images: [
       {

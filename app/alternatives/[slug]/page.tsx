@@ -41,12 +41,14 @@ export async function generateMetadata({
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
 
+  const desc = `Looking for the best alternative to ${tool.name}? Discover, compare, and analyze the top ${categoryFormatted} tools and software solutions for your team in 2026.`;
+
   return {
     title: `Best ${tool.name} Alternatives & Competitors (2026)`,
-    description: `Looking for an alternative to ${tool.name}? Discover and compare the best ${categoryFormatted} tools and software in 2026.`,
+    description: desc,
     openGraph: {
       title: `Best ${tool.name} Alternatives & Competitors (2026)`,
-      description: `Looking for an alternative to ${tool.name}? Discover and compare the best ${categoryFormatted} tools and software in 2026.`,
+      description: desc,
       type: "website",
       url: `${siteUrl}/alternatives/${slug}`,
       images: [

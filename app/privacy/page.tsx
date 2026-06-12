@@ -2,13 +2,13 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy Policy for Cloudy Unicorn",
+  description: "Read the Privacy Policy for Cloudy Unicorn. Learn how we collect, use, protect your personal information, and maintain data security across our platform.",
   alternates: {
     canonical: "https://www.cloudyunicorn.com/privacy",
   },
   openGraph: {
     title: "Privacy Policy | Cloudy Unicorn",
-    description: "Privacy Policy for Cloudy Unicorn",
+    description: "Read the Privacy Policy for Cloudy Unicorn. Learn how we collect, use, protect your personal information, and maintain data security across our platform.",
     url: "https://www.cloudyunicorn.com/privacy",
     images: [
       {

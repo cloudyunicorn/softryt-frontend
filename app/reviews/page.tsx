@@ -8,14 +8,14 @@ import { Button } from "@/components/ui/button";
 export const revalidate = 86400; // 24 hours
 
 export const metadata = {
-  title: "All SaaS Reviews | Cloudy Unicorn",
-  description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools.",
+  title: "All SaaS Reviews",
+  description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools. Compare real pricing, features, and find the perfect software.",
   alternates: {
     canonical: "https://www.cloudyunicorn.com/reviews",
   },
   openGraph: {
     title: "All SaaS Reviews | Cloudy Unicorn",
-    description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools.",
+    description: "Browse our complete directory of in-depth, AI-analyzed reviews of the most popular B2B SaaS tools. Compare real pricing, features, and find the perfect software.",
     url: "https://www.cloudyunicorn.com/reviews",
     images: [
       {

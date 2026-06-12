@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { extendMetaDescription } from "@/lib/utils";
 
 export const revalidate = 86400; // 24 hours
 
@@ -49,13 +50,17 @@ export async function generateMetadata({
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
+  const desc = extendMetaDescription(
+    page.meta_description,
+    "Compare pricing plans, features, pros and cons, and find the best alternatives."
+  );
 
   return {
-    title: `${page.title} | Cloudy Unicorn`,
-    description: page.meta_description,
+    title: page.title,
+    description: desc,
     openGraph: {
       title: page.title,
-      description: page.meta_description,
+      description: desc,
       type: "article",
       url: `${siteUrl}/review/${slug}`,
       images: [

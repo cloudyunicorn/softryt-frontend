@@ -50,7 +50,7 @@ export async function generateMetadata({
     process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
 
   return {
-    title: `${post.title} | Cloudy Unicorn`,
+    title: post.title,
     description: post.meta_description,
     openGraph: {
       title: post.title,

@@ -62,6 +62,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
+    {
+      url: `${siteUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.3,
+    },
   ];
 
   // Dynamic comparison/review pages
@@ -103,5 +115,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...dynamicPages, ...blogPages];
+  // Fetch all active tools for alternatives and categories (range paginated)
+  let tools: any[] = [];
+  let toolsFrom = 0;
+  let toolsHasMore = true;
+  while (toolsHasMore) {
+    const { data } = await supabase
+      .from("tools")
+      .select("slug, category, updated_at")
+      .eq("is_active", true)
+      .range(toolsFrom, toolsFrom + limit - 1);
+
+    if (data && data.length > 0) {
+      tools = tools.concat(data);
+      if (data.length < limit) {
+        toolsHasMore = false;
+      } else {
+        toolsFrom += limit;
+      }
+    } else {
+      toolsHasMore = false;
+    }
+  }
+
+  // Dynamic alternatives pages
+  const alternativesPages: MetadataRoute.Sitemap = (tools || []).map((tool) => ({
+    url: `${siteUrl}/alternatives/${tool.slug}`,
+    lastModified: tool.updated_at ? new Date(tool.updated_at) : new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.75,
+  }));
+
+  // Dynamic category pages (deduplicated)
+  const uniqueCategories = Array.from(new Set((tools || []).map((tool) => tool.category)));
+  const categoryPages: MetadataRoute.Sitemap = uniqueCategories.map((category) => ({
+    url: `${siteUrl}/category/${category}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [
+    ...staticPages,
+    ...dynamicPages,
+    ...blogPages,
+    ...alternativesPages,
+    ...categoryPages,
+  ];
 }

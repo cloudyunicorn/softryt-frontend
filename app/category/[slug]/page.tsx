@@ -31,7 +31,7 @@ export async function generateMetadata({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.cloudyunicorn.com";
 
   return {
-    title: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
+    title: `Best ${categoryName} Software & Tools`,
     description: `Browse top-rated ${categoryName} tools. Read in-depth reviews and compare pricing, features, and alternatives to find the best software for your business.`,
     openGraph: {
       title: `Best ${categoryName} Software & Tools | Cloudy Unicorn`,
